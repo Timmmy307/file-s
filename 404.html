@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <script src="404.js"></script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Access Portal</title>
+<style>
+  :root { color-scheme: light dark; }
+  body{font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;margin:0;display:grid;place-items:center;min-height:100vh;background:#0f1115;color:#e7e7ea}
+  .card{background:#151821;border:1px solid #272b36;border-radius:14px;padding:28px;max-width:520px;width:92%;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+  h1{margin:0 0 10px;font-size:22px}
+  p{margin:0 0 16px;color:#a6adbb}
+  input{width:100%;padding:12px 14px;border-radius:10px;border:1px solid #2d3342;background:#0f1320;color:#e7e7ea}
+  button{margin-top:12px;width:100%;padding:12px 14px;border-radius:10px;border:0;background:#3b82f6;color:#fff;cursor:pointer;font-weight:600}
+  button:hover{filter:brightness(1.1)}
+  .msg{margin-top:12px;font-size:14px}
+  .msg.ok{color:#9ae6b4}.msg.err{color:#fca5a5}
+  .small{font-size:12px;color:#8b93a7;margin-top:8px}
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>Access Portal</h1>
+    <p>Enter your access code to unlock the site.</p>
+
+    <input id="key" placeholder="Paste activation code here" autocomplete="one-time-code" />
+    <button id="btn">Activate</button>
+    <div id="msg" class="msg" role="status" aria-live="polite"></div>
+    <div class="small">Tip: you can also open this page with <code>?activate=YOUR_CODE</code>.</div>
+  </div>
+
+<script>
+  // === Config ===
+  const COOKIE_NAME = 'access';           // readable marker cookie
+  const LIFETIME_DAYS = 9;               // adjust how long access should last
+  const REDIRECT_TO = '/';                // where to go after success
+
+  // If an access cookie is already present, immediately redirect to REDIRECT_TO.
+  function hasAccessCookie(){
+    if(!document.cookie) return false;
+    // escape the cookie name for use in a RegExp
+    const escName = COOKIE_NAME.replace(/[-\/\\^$*+?.()|[\]{}]/g,'\\$&');
+    return new RegExp('(?:^|;\\s*)' + escName + '=').test(document.cookie);
+  }
+
+  if (hasAccessCookie()) {
+    // Immediately send the user to the site root if they already have the cookie.
+    // Use replace() so the sorry page doesn't remain in the history.
+    location.replace(REDIRECT_TO);
+  }
+
+  const $ = (sel) => document.querySelector(sel);
+  const $msg = $('#msg'), $btn = $('#btn'), $key = $('#key');
+
+  function say(text, ok=false){ $msg.textContent = text || ''; $msg.className = 'msg ' + (ok?'ok':'err'); }
+
+  // Build cookie string with Path=/; SameSite=Lax; Secure (when on HTTPS) and Max-Age
+  function setAccessCookie(days){
+    const expiresAt = new Date(Date.now() + days*24*60*60*1000);
+    const value = `1|${expiresAt.toISOString()}`; // simple readable format for your client checks
+    const isHttps = location.protocol === 'https:';
+    const attrs = [
+      `Path=/`,
+      `SameSite=Lax`,                     // safer default for same-site flows
+      isHttps ? `Secure` : ``,
+      `Max-Age=${Math.floor((expiresAt - new Date())/1000)}` // persistent cookie
+    ].filter(Boolean).join('; ');
+    document.cookie = `${COOKIE_NAME}=${encodeURIComponent(value)}; ${attrs}`;
+  }
+
+  async function activateWith(code){
+    code = (code||'').trim();
+    if(!code){ say('Please enter a code.'); return; }
+
+    // Client-only mode: we treat any code as valid and just set the cookie.
+    // (If you want a quick local rule, uncomment the length check below.)
+    // if (code.length < 8) { say('Code looks too short.'); return; }
+
+    setAccessCookie(LIFETIME_DAYS);
+    say('Access granted! Redirecting…', true);
+    setTimeout(()=> location.replace(REDIRECT_TO), 300);
+  }
+
+  $btn.addEventListener('click', ()=> activateWith($key.value));
+  $key.addEventListener('keydown', (e)=> { if(e.key==='Enter') activateWith($key.value); });
+
+  // Auto-run if opened with ?activate=... 
+  (function autoFromQuery(){
+    const sp = new URLSearchParams(location.search);
+    const c = sp.get('activate');
+    if(c){ $key.value = c; activateWith(c); }
+  })();
+</script>
+</body>
+</html>
