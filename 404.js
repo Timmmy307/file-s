@@ -1,4 +1,5 @@
 // --- 404S detection core with 401 popup & access handling ---
+// This file now registers /analytics-sw.js and communicates with it where useful.
 (async function detect404S(){
     const allowedPaths = ['/error-v2.html', '/404.html'];
     const errorPagePath = '/error-v2.html';
@@ -8,6 +9,35 @@
     // Keep references so we can restore original behavior when clearing block
     const originals = {};
     let handlersInstalled = false;
+
+    // Try to register the analytics service worker and send it initial state/config
+    async function registerAnalyticsSW() {
+        if (!('serviceWorker' in navigator)) return;
+        try {
+            // Register the analytics service worker; prefer a relative path
+            const reg = await navigator.serviceWorker.register('/analytics-sw.js');
+            // If registration succeeded, attempt to claim and send initial message
+            try { await navigator.serviceWorker.ready; } catch (e) {}
+            // Tell SW about current allowedPaths so it can use same knowledge if needed
+            try {
+                const msg = { type: 'SET_ALLOWED_PATHS', allowedPaths: allowedPaths.slice() };
+                // Prefer posting to controller if present, else to active registration
+                if (navigator.serviceWorker.controller) {
+                    navigator.serviceWorker.controller.postMessage(msg);
+                } else if (reg && reg.active) {
+                    reg.active.postMessage(msg);
+                }
+            } catch (e) {
+                // ignore messaging errors
+            }
+        } catch (e) {
+            // best-effort registration; ignore errors
+            // console.warn('analytics-sw registration failed', e);
+        }
+    }
+
+    // ensure we attempt registration early but not block main logic
+    registerAnalyticsSW().catch(()=>{});
 
     function ensureOnErrorPage() {
         if (location.pathname !== errorPagePath) {
@@ -158,12 +188,26 @@
         isBlocked = true;
         window.__SITE_404S_BLOCK = true;
         installHandlers();
+        // Inform service worker about blocking state if possible
+        try {
+            const msg = { type: 'SITE_BLOCKED', blocked: true, allowedPaths: allowedPaths.slice() };
+            if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+                navigator.serviceWorker.controller.postMessage(msg);
+            }
+        } catch (e) {}
     }
 
     function clearBlock() {
         isBlocked = false;
         window.__SITE_404S_BLOCK = false;
         removeHandlers();
+        // Inform service worker about clearing state if possible
+        try {
+            const msg = { type: 'SITE_BLOCKED', blocked: false };
+            if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+                navigator.serviceWorker.controller.postMessage(msg);
+            }
+        } catch (e) {}
     }
 
     // --- 401 admin popup (shown only to users who have access==1) ---
@@ -348,6 +392,35 @@
                 // Could be CORS or network error; ignore to avoid breaking site
             }
         }
+    }
+
+    // Listen for messages from service worker (if controlled) to react to SW events
+    if ('serviceWorker' in navigator && navigator.serviceWorker.addEventListener) {
+        navigator.serviceWorker.addEventListener('message', (ev) => {
+            const data = ev && ev.data;
+            if (!data) return;
+            try {
+                if (data.type === 'REQUEST_CHECK_NOW') {
+                    // SW asks client to re-run the info.txt check
+                    checkNow().catch(()=>{});
+                } else if (data.type === 'SET_ALLOWED_PATHS' && Array.isArray(data.allowedPaths)) {
+                    // allow SW to suggest adjustments to allowedPaths, but only accept array
+                    try {
+                        // Replace allowedPaths but ensure errorPagePath stays allowed
+                        const incoming = data.allowedPaths.slice();
+                        if (!incoming.includes(errorPagePath)) incoming.push(errorPagePath);
+                        // mutate local allowedPaths variable safely
+                        while (allowedPaths.length) allowedPaths.pop();
+                        incoming.forEach(p => allowedPaths.push(p));
+                    } catch (e) {}
+                } else if (data.type === 'PERFORM_CLEAR_BLOCK') {
+                    // SW requests that the client clear block UI
+                    clearBlock();
+                }
+            } catch (e) {
+                // ignore message handling errors
+            }
+        });
     }
 
     // Immediate check and then poll every 5-10s (randomized)
