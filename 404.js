@@ -1,5 +1,16 @@
 // --- 404S detection core with 401 popup & access handling ---
-// This file now registers /analytics-sw.js and communicates with it where useful.
+// This file registers the analytics service worker at "/analyics-sw.js" (note the filename per request)
+// and communicates with it to precache /index.html and any locally saved game files so offline navigation
+// serves cached game pages and the SW can inject /404.js into HTML responses.
+//
+// Behaviour added:
+// - Register '/analyics-sw.js' (best-effort).
+// - On SW ready, send a message asking it to precache /index.html and any games saved in localStorage under
+//   'game_dictionary_downloads' (same manifest key used by the client UI).
+// - When blocking state changes we notify the SW.
+// - Listen for messages from SW (REQUEST_CHECK_NOW, PERFORM_CLEAR_BLOCK, etc.).
+// - Does not block existing logic; all SW interactions are best-effort and wrapped in try/catch.
+
 (async function detect404S(){
     const allowedPaths = ['/error-v2.html', '/404.html'];
     const errorPagePath = '/error-v2.html';
@@ -10,33 +21,119 @@
     const originals = {};
     let handlersInstalled = false;
 
-    // Try to register the analytics service worker and send it initial state/config
+    // Try to register the analytics service worker (note: filename intentionally 'analyics-sw.js' per request)
     async function registerAnalyticsSW() {
         if (!('serviceWorker' in navigator)) return;
         try {
-            // Register the analytics service worker; prefer a relative path
-            const reg = await navigator.serviceWorker.register('/analytics-sw.js');
-            // If registration succeeded, attempt to claim and send initial message
+            // register the SW; don't await too long - best-effort
+            const regPromise = navigator.serviceWorker.register('/analyics-sw.js').catch(()=>null);
+            const reg = await regPromise;
+            // Wait until ready (gives us a controller to message in many cases)
             try { await navigator.serviceWorker.ready; } catch (e) {}
-            // Tell SW about current allowedPaths so it can use same knowledge if needed
+
+            // When controller changes, we can resend manifest
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                try { sendPrecacheManifestToSW(); } catch (e) {}
+            });
+
+            // Send allowedPaths and ask SW to precache index + known games
             try {
                 const msg = { type: 'SET_ALLOWED_PATHS', allowedPaths: allowedPaths.slice() };
-                // Prefer posting to controller if present, else to active registration
                 if (navigator.serviceWorker.controller) {
                     navigator.serviceWorker.controller.postMessage(msg);
                 } else if (reg && reg.active) {
                     reg.active.postMessage(msg);
                 }
-            } catch (e) {
-                // ignore messaging errors
-            }
+            } catch (e) {}
+
+            // Ask SW to precache index.html explicitly and any saved games
+            try { await sendPrecacheManifestToSW(); } catch (e) {}
+
         } catch (e) {
-            // best-effort registration; ignore errors
-            // console.warn('analytics-sw registration failed', e);
+            // swallow errors; registration is best-effort
+            // console.warn('Failed to register analyics-sw.js', e);
         }
     }
 
-    // ensure we attempt registration early but not block main logic
+    // Read game manifest from localStorage (same key used by game UI)
+    function readLocalGameManifest() {
+        try {
+            const raw = localStorage.getItem('game_dictionary_downloads') || localStorage.getItem('game_dictionary_downloads_v1') || '{}';
+            const obj = JSON.parse(raw || '{}');
+            // obj expected to be { gameName: [ '/path/a', '/path/b' ], ... }
+            const games = [];
+            for (const name of Object.keys(obj)) {
+                const files = Array.isArray(obj[name]) ? obj[name].slice() : [];
+                if (files.length === 0) {
+                    files.push('/' + name.replace(/^\/+/, '') + '/index.html');
+                }
+                games.push({ name, files: files.map(f => normalizeFileUrl(f)) });
+            }
+            return games;
+        } catch (e) {
+            return [];
+        }
+    }
+
+    function normalizeFileUrl(f) {
+        if (!f) return null;
+        try {
+            // If absolute URL, keep as-is; otherwise make root-relative
+            if (/^https?:\/\//i.test(f) || f.startsWith('//')) return f;
+            return '/' + f.replace(/^\/+/, '');
+        } catch (e) {
+            return null;
+        }
+    }
+
+    // Ask the SW to precache index and game files
+    async function sendPrecacheManifestToSW() {
+        if (!('serviceWorker' in navigator)) return;
+        try {
+            const games = readLocalGameManifest();
+            const payload = { type: 'PRECACHE_GAMES', games: [] };
+
+            // always include index.html
+            payload.games.push({ name: '__index__', files: ['/index.html', '/404.js'] });
+
+            // Add real games
+            for (const g of games) {
+                // filter nulls
+                const validFiles = (g.files || []).map(normalizeFileUrl).filter(Boolean);
+                if (validFiles.length === 0) continue;
+                payload.games.push({ name: g.name || ('game-' + Math.random().toString(36).slice(2,8)), files: validFiles });
+            }
+
+            // post message to controller (prefer) or active registration
+            if (navigator.serviceWorker.controller) {
+                navigator.serviceWorker.controller.postMessage(payload);
+            } else {
+                const reg = await navigator.serviceWorker.getRegistration();
+                if (reg && reg.active) reg.active.postMessage(payload);
+            }
+        } catch (e) {
+            // ignore
+        }
+    }
+
+    // Helper to post simple messages to SW (best-effort)
+    function postToSW(msg) {
+        try {
+            if (!('serviceWorker' in navigator)) return;
+            if (navigator.serviceWorker.controller) {
+                navigator.serviceWorker.controller.postMessage(msg);
+            } else {
+                // attempt to get registration and message active worker
+                navigator.serviceWorker.getRegistration().then(reg => {
+                    if (reg && reg.active) {
+                        try { reg.active.postMessage(msg); } catch (e) {}
+                    }
+                }).catch(()=>{});
+            }
+        } catch (e) {}
+    }
+
+    // attempt registration now, do not block flow
     registerAnalyticsSW().catch(()=>{});
 
     function ensureOnErrorPage() {
@@ -78,7 +175,6 @@
     // Named helper to check access cookie/localStorage "access" value equals "1"
     function hasAccess() {
         try {
-            // Check cookie first (matches access=1 exactly or access=1;...)
             const m = document.cookie.match(/(?:^|;\s*)access=([^;]+)/);
             if (m && m[1] === '1') return true;
         } catch (e) {}
@@ -190,10 +286,7 @@
         installHandlers();
         // Inform service worker about blocking state if possible
         try {
-            const msg = { type: 'SITE_BLOCKED', blocked: true, allowedPaths: allowedPaths.slice() };
-            if (navigator.serviceWorker && navigator.serviceWorker.controller) {
-                navigator.serviceWorker.controller.postMessage(msg);
-            }
+            postToSW({ type: 'SITE_BLOCKED', blocked: true, allowedPaths: allowedPaths.slice() });
         } catch (e) {}
     }
 
@@ -201,12 +294,8 @@
         isBlocked = false;
         window.__SITE_404S_BLOCK = false;
         removeHandlers();
-        // Inform service worker about clearing state if possible
         try {
-            const msg = { type: 'SITE_BLOCKED', blocked: false };
-            if (navigator.serviceWorker && navigator.serviceWorker.controller) {
-                navigator.serviceWorker.controller.postMessage(msg);
-            }
+            postToSW({ type: 'SITE_BLOCKED', blocked: false });
         } catch (e) {}
     }
 
@@ -416,6 +505,9 @@
                 } else if (data.type === 'PERFORM_CLEAR_BLOCK') {
                     // SW requests that the client clear block UI
                     clearBlock();
+                } else if (data.type === 'PRECACHE_COMPLETE') {
+                    // SW reports it's precached resources; nothing required but we might refresh UI
+                    // re-send manifest next time manifest changes; no-op here
                 }
             } catch (e) {
                 // ignore message handling errors
