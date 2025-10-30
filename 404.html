@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <script src="404.js"></script>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Access Portal</title>
@@ -32,21 +31,24 @@
 
 <script>
   // === Config ===
-  const COOKIE_NAME = 'access';           // readable marker cookie
-  const LIFETIME_DAYS = 9;               // adjust how long access should last
-  const REDIRECT_TO = '/';                // where to go after success
+  const COOKIE_NAME = 'access';
+  const LIFETIME_DAYS = 9;
+  const REDIRECT_TO = '/';
 
-  // If an access cookie is already present, immediately redirect to REDIRECT_TO.
-  function hasAccessCookie(){
-    if(!document.cookie) return false;
-    // escape the cookie name for use in a RegExp
-    const escName = COOKIE_NAME.replace(/[-\/\\^$*+?.()|[\]{}]/g,'\\$&');
-    return new RegExp('(?:^|;\\s*)' + escName + '=').test(document.cookie);
+  // Helper to read a cookie value by name (returns decoded value or null)
+  function getCookie(name) {
+    const m = document.cookie.match('(?:^|; )' + name.replace(/[-\/\\^$*+?.()|[\]{}]/g,'\\$&') + '=([^;]*)');
+    return m ? decodeURIComponent(m[1]) : null;
   }
 
-  if (hasAccessCookie()) {
-    // Immediately send the user to the site root if they already have the cookie.
-    // Use replace() so the sorry page doesn't remain in the history.
+  // If an access cookie with the expected value is already present, immediately redirect.
+  function hasValidAccess() {
+    const v = getCookie(COOKIE_NAME);
+    return v === '1';
+  }
+
+  if (hasValidAccess()) {
+    // Use replace so this page doesn't remain in history
     location.replace(REDIRECT_TO);
   }
 
@@ -57,14 +59,16 @@
 
   // Build cookie string with Path=/; SameSite=Lax; Secure (when on HTTPS) and Max-Age
   function setAccessCookie(days){
-    const expiresAt = new Date(Date.now() + days*24*60*60*1000);
-    const value = `1|${expiresAt.toISOString()}`; // simple readable format for your client checks
+    const maxAge = Math.floor(days * 24 * 60 * 60);
+    // We store a simple "1" token as the cookie value so other pages can expect exact "1".
+    // (Expiration is handled via Max-Age attribute.)
+    const value = '1';
     const isHttps = location.protocol === 'https:';
     const attrs = [
       `Path=/`,
-      `SameSite=Lax`,                     // safer default for same-site flows
+      `SameSite=Lax`,
       isHttps ? `Secure` : ``,
-      `Max-Age=${Math.floor((expiresAt - new Date())/1000)}` // persistent cookie
+      `Max-Age=${maxAge}`
     ].filter(Boolean).join('; ');
     document.cookie = `${COOKIE_NAME}=${encodeURIComponent(value)}; ${attrs}`;
   }
@@ -73,9 +77,9 @@
     code = (code||'').trim();
     if(!code){ say('Please enter a code.'); return; }
 
-    // Client-only mode: we treat any code as valid and just set the cookie.
-    // (If you want a quick local rule, uncomment the length check below.)
-    // if (code.length < 8) { say('Code looks too short.'); return; }
+    // Client-only mode: treat any code as valid and just set the cookie.
+    // If you later want server validation, replace this client-side acceptance
+    // with a fetch to your backend and set the cookie only on success.
 
     setAccessCookie(LIFETIME_DAYS);
     say('Access granted! Redirecting…', true);
