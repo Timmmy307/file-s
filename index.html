@@ -1,20 +1,11 @@
 <!DOCTYPE html>
-
 <html lang="en">
-<head><script>(function () {
-  const cookies = document.cookie.split("; ").map(c => c.trim());
-  const accessCookie = cookies.find(c => c.startsWith("access="));
-  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
-  if (accessValue !== "1") {
-    window.location.replace("/404.html");
-  }
-})();</script>
+<head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <title>Game Dictionary</title>
 <link href="https://raw.githubusercontent.com/Sirco-team/files/refs/heads/main/ugb/UBG_favcon.png" rel="icon" type="image/png"/>
 <style>
-    /* page styles updated to match the rest of the site */
     :root{
       --brand:#007bff;
       --muted:#6c757d;
@@ -72,11 +63,8 @@
     .search { width:100%; max-width:420px; padding:8px 10px; border-radius:8px; border:1px solid rgba(2,6,23,0.08); background:transparent; font-size:14px; color:inherit }
     .search:focus { outline:2px solid rgba(0,123,255,0.12); box-shadow:0 4px 12px rgba(2,6,23,0.04); }
   </style>
-<!-- fonts & visual/theme logic (copied-in behavior instead of shallow welcome includes) -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
-<!-- Theme overrides for dark mode (applies when .dark on html) -->
 <style id="theme-overrides">
-    /* default light vars (kept by existing CSS). dark-mode overrides below */
     html.dark {
       --page-bg: #0b1020;
       --card-bg: #0f1724;
@@ -84,16 +72,34 @@
       --muted: #94a3b8;
       color-scheme: dark;
     }
-    /* quick visible defaults when dark applied */
     html.dark body { background: var(--page-bg); color: #e6eef8; }
     html.dark .card { background: var(--card-bg); border-color: rgba(255,255,255,0.03); }
     html.dark .muted { color: var(--muted); }
   </style>
+
+<!-- Immediately enforce access cookie check on page load.
+     This uses the same cookie name from the access portal ("access")
+     and expects the value to be exactly "1". If not present or not "1"
+     the user is redirected to /404.html. -->
+<script>
+  (function () {
+    function getCookie(name) {
+      const m = document.cookie.match('(?:^|; )' + name.replace(/[-\/\\^$*+?.()|[\]{}]/g,'\\$&') + '=([^;]*)');
+      return m ? decodeURIComponent(m[1]) : null;
+    }
+    const accessValue = getCookie('access');
+    if (accessValue !== '1') {
+      // Ensure replace so the user can't navigate back to this page via history
+      window.location.replace('/404.html');
+    }
+  })();
+</script>
+
 <script>
     // theme detection & persistence (cookie + localStorage fallback)
     (function(){
       function getCookie(name){
-        const m = document.cookie.match('(?:^|; )' + name + '=([^;]*)');
+        const m = document.cookie.match('(?:^|; )' + name.replace(/[-\/\\^$*+?.()|[\]{}]/g,'\\$&') + '=([^;]*)');
         return m ? decodeURIComponent(m[1]) : null;
       }
       function setCookie(name, value, days){
@@ -101,7 +107,6 @@
         document.cookie = encodeURIComponent(name) + '=' + encodeURIComponent(value) + ';path=/' + max;
       }
 
-      // Determine saved preference: cookie first, then localStorage, then system preference
       var saved = getCookie('theme') || localStorage.getItem('theme');
       if (!saved) {
         try {
@@ -112,7 +117,6 @@
       if (saved === 'dark') document.documentElement.classList.add('dark');
       else document.documentElement.classList.remove('dark');
 
-      // Expose a helper to toggle/set theme programmatically
       window.setTheme = function(theme){
         try {
           if (theme === 'dark') {
@@ -129,25 +133,7 @@
     })();
   </script>
 <script defer="" src="/welcome/stars.js"></script>
-<script>function checkCookie() {
-  const cookies = document.cookie.split("; ").map(c => c.trim());
-  const accessCookie = cookies.find(c => c.startsWith("access="));
-  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
-  if (accessValue !== "1") {
-    window.location.replace("/404.html");
-  }
-}
-
-function scheduleNextCheck() {
-  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
-  setTimeout(() => {
-    checkCookie();
-    scheduleNextCheck();
-  }, next);
-}
-
-checkCookie();
-scheduleNextCheck();</script></head>
+</head>
 <body><script src="/analytics.js?v=1761789032784"></script>
 <canvas id="canvas" style="position:fixed;inset:0;z-index:0;pointer-events:none;"></canvas>
 <div class="wrap">
@@ -174,7 +160,7 @@ scheduleNextCheck();</script></head>
 <div aria-live="polite" id="games"></div>
 </div>
 <script>
-    // Use root-relative index file and root-relative game paths.
+    // Root-relative index.xml and root-relative game navigation.
     const INDEX_XML_URL = '/index.xml';
     const CACHE_NAME = 'site-offline-cache-v1';
     const MANIFEST_KEY = 'game_dictionary_downloads';
@@ -191,7 +177,6 @@ scheduleNextCheck();</script></head>
 
     async function fetchIndexXML() {
       try {
-        // Append a unique timestamp query so the request is different each time
         const ts = encodeURIComponent(new Date().toISOString());
         const sep = INDEX_XML_URL.includes('?') ? '&' : '?';
         const url = INDEX_XML_URL + sep + 't=' + ts;
@@ -203,7 +188,6 @@ scheduleNextCheck();</script></head>
         return xml;
       } catch (e) {
         console.error('fetchIndexXML error:', e);
-        // Returning null is the signal used elsewhere to treat the app as offline
         return null;
       }
     }
@@ -220,7 +204,6 @@ scheduleNextCheck();</script></head>
           const fp = f.textContent.trim();
           if (fp) files.push(fp);
         });
-        // fallback: if no files listed, try index.html under folder name
         if (files.length === 0 && name) files.push(name + '/index.html');
         games.push({name, title, files});
       });
@@ -236,12 +219,9 @@ scheduleNextCheck();</script></head>
       localStorage.setItem(MANIFEST_KEY, JSON.stringify(m));
     }
 
-    // Normalize a file entry to a cache key / fetch URL:
     function normalizeFileUrl(f) {
       if (!f) return null;
-      // absolute http(s) or protocol-relative: return as-is
       if (/^https?:\/\//i.test(f) || /^\/\//.test(f)) return f;
-      // root-relative or relative local path: ensure single leading slash
       return '/' + f.replace(/^\/+/, '');
     }
 
@@ -280,24 +260,16 @@ scheduleNextCheck();</script></head>
             console.warn('Skipping', fetchUrl, 'status', resp && resp.status);
             continue;
           }
-          // store under the normalized URL so lookups and removals match
           try {
             await cache.put(fetchUrl, resp.clone());
           } catch (e) {
             console.warn('cache.put failed for', fetchUrl, e);
           }
-          // also store under a simple site-relative path (same as fetchUrl for local files) — harmless for external URLs
-          try {
-            const sitePath = normalizeFileUrl(f);
-            if (sitePath !== fetchUrl) {
-              try { await cache.put(sitePath, resp.clone()); } catch (e) {}
-            }
-          } catch(e){}
           saved[game.name].push(f);
         }
         saveSavedManifest(saved);
         btn.textContent = 'Downloaded';
-        render(); // re-render to show Play button
+        render();
       } catch (e) {
         console.error(e);
         alert('Download failed, check console.');
@@ -339,11 +311,9 @@ scheduleNextCheck();</script></head>
       setRecent(arr);
       render();
     }
-    // ensure default
     if (getRecentEnabled() === null) setRecentEnabled(true);
 
     function createGameCard(game, cached, starredList) {
-      // backward-compatible signature -> allow options passed as 4th arg
       const opts = (arguments.length >= 4 && typeof arguments[3] === 'object') ? arguments[3] : {};
       const wrapper = el('div', {class:'row'});
       const card = el('div', {class:'card'});
@@ -353,18 +323,15 @@ scheduleNextCheck();</script></head>
       meta.appendChild(title);
       meta.appendChild(sub);
 
-      // Play button below name — navigate to root + game name
       const playRow = el('div', {style:'margin:8px 0 0 0;'});
       const playBtn = el('button', {class:'btn small'}, 'Play');
       playBtn.onclick = () => {
         addRecent(game.name);
-        // navigate to the root path followed by the game name
         const dest = '/' + encodeURIComponent(game.name);
         window.location.href = dest;
       };
       playRow.appendChild(playBtn);
 
-      // Star button
       const starBtn = el('button', {class:'btn ghost small', style:'margin-left:8px;'}, starredList.includes(game.name) ? '★ Unstar' : '☆ Star');
       starBtn.onclick = () => {
         let arr = getStarred();
@@ -375,13 +342,9 @@ scheduleNextCheck();</script></head>
       };
       playRow.appendChild(starBtn);
 
-      // Download / Remove actions
       const downloadBtn = el('button', {class:'btn small', style:'margin-left:8px;'}, cached ? 'Downloaded' : 'Download');
       downloadBtn.onclick = async () => {
-        if (cached) {
-          // already downloaded
-          return;
-        }
+        if (cached) return;
         await downloadGame(game, downloadBtn);
       };
       playRow.appendChild(downloadBtn);
@@ -389,7 +352,6 @@ scheduleNextCheck();</script></head>
       meta.appendChild(playRow);
 
       const actions = el('div', {class:'actions'});
-      // Append Remove first (if cached) so other controls (Forget) appear to the right
       if (cached) {
         const remove = el('button', {class:'btn ghost small'}, 'Remove');
         remove.onclick = async () => {
@@ -408,7 +370,6 @@ scheduleNextCheck();</script></head>
         };
         actions.appendChild(remove);
       }
-      // If this card is being rendered for the Recently Played list, append "Forget" after Remove so it is rightmost
       if (opts.unrecent) {
         const forget = el('button', {class:'btn ghost small'}, 'Forget');
         forget.onclick = () => {
@@ -424,7 +385,6 @@ scheduleNextCheck();</script></head>
       return wrapper;
     }
 
-    // search state and helpers
     let searchTerm = '';
     function matchesSearch(game) {
       if (!searchTerm) return true;
@@ -455,13 +415,11 @@ scheduleNextCheck();</script></head>
       const starred = getStarred();
       const recent = getRecent();
 
-      // Parse games from XML if available
       let gamesFromXML = [];
       if (xml) {
         gamesFromXML = parseGamesFromXML(xml);
       }
 
-      // Build an initial games list and a lookup by name
       const games = [];
       const gamesByName = {};
       for (const g of gamesFromXML) {
@@ -469,7 +427,6 @@ scheduleNextCheck();</script></head>
         gamesByName[g.name] = g;
       }
 
-      // Helper to create a fallback game object from local data
       function makeFallbackGame(name) {
         const files = (savedManifest[name] && savedManifest[name].length)
           ? savedManifest[name].slice()
@@ -477,7 +434,6 @@ scheduleNextCheck();</script></head>
         return { name, title: name, files };
       }
 
-      // Ensure that starred, recent, and any saved-manifest keys appear so we can render their cards
       const localNames = new Set([ ...starred, ...recent, ...Object.keys(savedManifest) ]);
       for (const n of localNames) {
         if (!n) continue;
@@ -488,16 +444,13 @@ scheduleNextCheck();</script></head>
         }
       }
 
-      // Reliable offline detection: consider offline if fetch failed OR browser reports offline.
       const offline = (!xml) || (typeof navigator !== 'undefined' && navigator.onLine === false);
 
-      // If offline and there are no local entries to show, bail out with a message
       if (offline && games.length === 0) {
         status.textContent = 'Unable to fetch /index.xml and no local games saved.';
         return;
       }
 
-      // Update status based on availability
       if (offline) {
         status.textContent = 'Offline: showing local Starred/Recently Played games';
       } else if (xml && gamesFromXML.length === 0) {
@@ -506,7 +459,6 @@ scheduleNextCheck();</script></head>
         status.textContent = '';
       }
 
-      // Starred section (show clones of game cards)
       if (starred.length > 0) {
         const starWrap = el('div', {style:'margin-bottom:18px;'});
         const starTitle = el('div', {style:'font-weight:600;font-size:16px;margin-bottom:8px;'}, '★ Starred');
@@ -521,7 +473,6 @@ scheduleNextCheck();</script></head>
         gamesDiv.appendChild(starWrap);
       }
 
-      // Recently played section (also shows clones) — only show when enabled
       if (getRecentEnabled() && recent.length > 0) {
         const recentWrap = el('div', {style:'margin-bottom:18px;'});
         const recentTitle = el('div', {style:'font-weight:600;font-size:16px;margin-bottom:8px;'}, '⏱ Recently Played');
@@ -530,14 +481,12 @@ scheduleNextCheck();</script></head>
           const g = gamesByName[name];
           if (g && matchesSearch(g)) {
             const cached = await isGameCached(g);
-            // pass option to show "Forget" control for this clone
             recentWrap.appendChild(createGameCard(g, cached, starred, {unrecent: true}));
           }
         }
         gamesDiv.appendChild(recentWrap);
       }
 
-      // Only show "All Games" when we are online (index.xml fetched successfully AND browser reports online)
       if (!offline) {
         const allWrap = el('div', {style:'margin-bottom:18px;'});
         const allTitle = el('div', {style:'font-weight:600;font-size:16px;margin-bottom:8px;'}, 'All Games');
@@ -550,7 +499,6 @@ scheduleNextCheck();</script></head>
         gamesDiv.appendChild(allWrap);
       }
 
-      // update recent-toggle UI
       const toggleBtn = document.getElementById('toggleRecent');
       if (toggleBtn) toggleBtn.textContent = 'Recent: ' + (getRecentEnabled() ? 'On' : 'Off');
     }
@@ -560,7 +508,6 @@ scheduleNextCheck();</script></head>
       setRecentEnabled(!getRecentEnabled());
       render();
     });
-    // initial render
     render();
   </script>
 </body>
