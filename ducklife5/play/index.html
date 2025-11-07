@@ -1,10 +1,17 @@
 
-
 <!DOCTYPE html>
+
 <html lang="en-us" style="height:100%">
-<head>
-<meta charset="utf-8">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script>
+<meta charset="utf-8"/>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
 <title>Duck Life Space</title>
 <script src="Build/UnityLoader.js" type="23682bdcf0d3bd0ab46a820a-text/javascript"></script>
 <script type="23682bdcf0d3bd0ab46a820a-text/javascript">
@@ -26,8 +33,30 @@
             height: 100%;
         }
 </style>
-</head>
+<script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
+
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
+
+checkCookie();
+scheduleNextCheck();</script></head>
 <body style="width:100%; height:100%; margin:0">
 <div id="gameContainer" style="width:100%; height:100%;"></div>
-<script src="./rocket-loader.min.js" data-cf-settings="23682bdcf0d3bd0ab46a820a-|49" defer=""></script></body>
+<script data-cf-settings="23682bdcf0d3bd0ab46a820a-|49" defer="" src="./rocket-loader.min.js"></script></body>
 </html>

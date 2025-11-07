@@ -1,10 +1,17 @@
 <html>
-  <head>
-    <script src="jquery-1.4.1.min.js"></script>
-    <script src="vector_battle_regular.typeface.js"></script>
-    <script src="ipad.js"></script>
-    <script src="game.js"></script>
-    <style>
+<head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script>
+<script src="jquery-1.4.1.min.js"></script>
+<script src="vector_battle_regular.typeface.js"></script>
+<script src="ipad.js"></script>
+<script src="game.js"></script>
+<style>
 	  body {background-color: #000;}
       #canvas { border:1px solid black; top:0px; left:0px; background-color: #fff;}
       .button { position:absolute; border:1px solid black; }
@@ -15,18 +22,40 @@
       #right { width:100px; height:100px; bottom:0px; left:100px; }
       #space { width:200px; height:200px; bottom:0px; right:0px; }
     </style>
-  </head>
-  <body>
-    <div id="game-container" align="center">
-      <canvas id="canvas" width="780" height="540"></canvas>
-      <div id="left-controls">
-        <div id="up" class='button'>THRUST</div>
-        <div id="left" class='button'>LEFT</div>
-        <div id="right" class='button'>RIGHT</div>
-      </div>
-      <div id="right-controls">
-        <div id="space" class='button'>FIRE</div>
-      </div>
-    </div>
-  </body>
+<script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
+
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
+
+checkCookie();
+scheduleNextCheck();</script></head>
+<body>
+<div align="center" id="game-container">
+<canvas height="540" id="canvas" width="780"></canvas>
+<div id="left-controls">
+<div class="button" id="up">THRUST</div>
+<div class="button" id="left">LEFT</div>
+<div class="button" id="right">RIGHT</div>
+</div>
+<div id="right-controls">
+<div class="button" id="space">FIRE</div>
+</div>
+</div>
+</body>
 </html>

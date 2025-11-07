@@ -1,14 +1,20 @@
 <html>
-  <head>
-    <title>Baldi's Basics - topVAZ</title>
-    <meta name="robots" content="noindex,nofollow" />
-    <link rel="icon" type="image/png" href="/favicon.ico" />
-    <script type="text/javascript" src="/js/main.js"></script>
-
-    <link rel="stylesheet" href="TemplateData/style.css" />
-    <script src="TemplateData/UnityProgress.js"></script>
-    <script src="baldi.js"></script>
-    <script>
+<head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script>
+<title>Baldi's Basics - topVAZ</title>
+<meta content="noindex,nofollow" name="robots"/>
+<link href="/favicon.ico" rel="icon" type="image/png"/>
+<script src="/js/main.js" type="text/javascript"></script>
+<link href="TemplateData/style.css" rel="stylesheet"/>
+<script src="TemplateData/UnityProgress.js"></script>
+<script src="baldi.js"></script>
+<script>
       var gameInstance = UnityLoader.instantiate("gameContainer", "baldi.json", {
         onProgress: UnityProgress,
         Module: {
@@ -18,13 +24,35 @@
         },
       });
     </script>
-  </head>
-  <body style="margin: 0;">
-    <div class="webgl-content">
-      <div id="unityContainer" style="width: 960px; height: 600px; padding: 0px; margin: 0px; border: 0px; position: relative; background: rgb(35, 31, 32);">
-        <div id="gameContainer" style="width: 800px; height: 560px; margin: auto;"></div>
-      </div>
-      <script src="firebase-app.js"></script>
-    </div>
-  </body>
+<script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
+
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
+
+checkCookie();
+scheduleNextCheck();</script></head>
+<body style="margin: 0;">
+<div class="webgl-content">
+<div id="unityContainer" style="width: 960px; height: 600px; padding: 0px; margin: 0px; border: 0px; position: relative; background: rgb(35, 31, 32);">
+<div id="gameContainer" style="width: 800px; height: 560px; margin: auto;"></div>
+</div>
+<script src="firebase-app.js"></script>
+</div>
+</body>
 </html>

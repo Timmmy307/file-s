@@ -1,19 +1,47 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html>
-<head>
-	<meta charset="utf-8" />
-	<title>Sleeping Beauty &ndash; a 7-day roguelike</title>
-	<link rel="stylesheet" href="app.css" />
-</head>
+<head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script>
+<meta charset="utf-8"/>
+<title>Sleeping Beauty – a 7-day roguelike</title>
+<link href="app.css" rel="stylesheet"/>
+<script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
+
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
+
+checkCookie();
+scheduleNextCheck();</script></head>
 <body>
-	<div id="map" class="hidden"></div>
-	<div id="combat" class="hidden"></div>
-	<div id="log" class="hidden"></div>
-	<div id="status" class="hidden"></div>
-
-	<div id="intro"></div>
-
-	<script src="rot.min.js"></script>
-	<script src="app.js"></script>
+<div class="hidden" id="map"></div>
+<div class="hidden" id="combat"></div>
+<div class="hidden" id="log"></div>
+<div class="hidden" id="status"></div>
+<div id="intro"></div>
+<script src="rot.min.js"></script>
+<script src="app.js"></script>
 </body>
 </html>

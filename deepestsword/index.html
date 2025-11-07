@@ -1,12 +1,19 @@
 <!DOCTYPE html>
-<html lang="en-us">
 
-<head>
-    <meta name="robots" content="noindex,nofollow" />
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Deepest Sword</title>
-    <style>
+<html lang="en-us">
+<head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script>
+<meta content="noindex,nofollow" name="robots"/>
+<meta charset="utf-8"/>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<title>Deepest Sword</title>
+<style>
         html,
         body {
             background: #000;
@@ -26,13 +33,34 @@
             position: absolute;
         }
     </style>
-</head>
+<script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
 
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
+
+checkCookie();
+scheduleNextCheck();</script></head>
 <body>
-    <div id="gameContainer">
-        <canvas id="unity-canvas"></canvas>
-        <script src="Build/WebBuilds.loader.js"></script>
-        <script>
+<div id="gameContainer">
+<canvas id="unity-canvas"></canvas>
+<script src="Build/WebBuilds.loader.js"></script>
+<script>
             createUnityInstance(document.querySelector("#unity-canvas"), {
                 dataUrl: "Build/WebBuilds.data",
                 frameworkUrl: "Build/WebBuilds.framework.js",
@@ -79,7 +107,6 @@
                 onResize();
             });
         </script>
-    </div>
+</div>
 </body>
-
 </html>

@@ -1,24 +1,47 @@
 <!DOCTYPE html>
+
 <html lang="en">
+<head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script>
+<meta charset="utf-8"/>
+<meta content="ie=edge" http-equiv="x-ua-compatible"/>
+<meta content="initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" name="viewport">
+<title>Vex 5</title>
+<link href="assets/css/app.css" rel="stylesheet" type="text/css"/>
+</meta><script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
 
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
 
-
-    <title>Vex 5</title>
-
-
-    <link rel="stylesheet" href="assets/css/app.css" type="text/css" />
-
-</head>
-
+checkCookie();
+scheduleNextCheck();</script></head>
 <body>
-    <div id="content"></div>
-    <div id="loader">Loading...</div>
-    <div id="orientation"></div>
-    <script type="text/javascript">
+<div id="content"></div>
+<div id="loader">Loading...</div>
+<div id="orientation"></div>
+<script type="text/javascript">
         var gameName = 'vex-5.min.js';
 
 
@@ -45,5 +68,4 @@
         })
     </script>
 </body>
-
 </html>

@@ -1,11 +1,18 @@
 <!DOCTYPE html>
+
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no,minimal-ui">
-    <title>Tower</title>
-    <style>
+<head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no,minimal-ui" name="viewport"/>
+<title>Tower</title>
+<style>
         * {
             margin: 0;
             padding: 0
@@ -359,64 +366,72 @@
             font-family: 'wenxue';
         }
     </style>
-</head>
-<body>
-<canvas id="canvas" class="hide"></canvas>
-<div class="content">
-    <div class="loading">
-        <div class="main"><img
-                src="./assets/main-loading.gif">
-            <div class="progress">
-                <div class="title font-wenxue">0%</div>
-                <div class="bar">
-                    <div class="sub">
-                        <div class="percent"></div>
-                    </div>
-                </div>
-                <div class="text">加载中</div>
-            </div>
-        </div>
+<script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
 
-    </div>
-    <div class="landing hide">
-        <div class="action-1">
-            <img
-                    src="./assets/main-index-title.png"
-                    class="title swing">
-        </div>
-        <div class="action-2"><img id="start"
-                                   src="./assets/main-index-start.png"
-                                   class="start"></div>
-    </div>
-    <div id="modal" class="modal hide">
-        <div class="mask"></div>
-        <div class="js-modal-content modal-content">
-            <div class="main">
-                <div class="container"><img
-                        src="./assets/main-modal-bg.png"
-                        class="bg">
-                    <div class="modal-main">
-                        <div id="over-modal" class="hide js-modal-card"><img
-                                src="./assets/main-modal-over.png"
-                                class="over-img">
-                            <div id="score" class="over-score font-wenxue"></div>
-                            <div id="over-zero" class="hide">
-                                <div class="tip"><p>再来一次吧！</p>
-                                    <img
-                                            src="./assets/main-modal-again-b.png"
-                                            class="over-button-b js-reload"><img
-                                            src="./assets/main-modal-invite-b.png"
-                                            class="over-button-b js-invite"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="wxShare hide">
-        <img src="./assets/main-share-icon.png">
-    </div>
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
+
+checkCookie();
+scheduleNextCheck();</script></head>
+<body>
+<canvas class="hide" id="canvas"></canvas>
+<div class="content">
+<div class="loading">
+<div class="main"><img src="./assets/main-loading.gif"/>
+<div class="progress">
+<div class="title font-wenxue">0%</div>
+<div class="bar">
+<div class="sub">
+<div class="percent"></div>
+</div>
+</div>
+<div class="text">加载中</div>
+</div>
+</div>
+</div>
+<div class="landing hide">
+<div class="action-1">
+<img class="title swing" src="./assets/main-index-title.png"/>
+</div>
+<div class="action-2"><img class="start" id="start" src="./assets/main-index-start.png"/></div>
+</div>
+<div class="modal hide" id="modal">
+<div class="mask"></div>
+<div class="js-modal-content modal-content">
+<div class="main">
+<div class="container"><img class="bg" src="./assets/main-modal-bg.png"/>
+<div class="modal-main">
+<div class="hide js-modal-card" id="over-modal"><img class="over-img" src="./assets/main-modal-over.png"/>
+<div class="over-score font-wenxue" id="score"></div>
+<div class="hide" id="over-zero">
+<div class="tip"><p>再来一次吧！</p>
+<img class="over-button-b js-reload" src="./assets/main-modal-again-b.png"/><img class="over-button-b js-invite" src="./assets/main-modal-invite-b.png"/></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="wxShare hide">
+<img src="./assets/main-share-icon.png"/>
+</div>
 </div>
 <script src="./dist/main.js"></script>
 <script src="./assets/zepto-1.1.6.min.js"></script>

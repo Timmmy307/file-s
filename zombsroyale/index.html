@@ -1,11 +1,41 @@
 <!DOCTYPE html>
+
 <html>
-  <head>
-    <link rel="icon" href="zomb.png">
-    <title>Zombs Royale | </title>
-    <script type="application/javascript" src="/js/main.js"></script>
-  </head>
-  <body>
-    <iframe src="https://advanced-channeler.02.gz-associates.com/?t=tmm-zombsroyale" referrerpolicy="no-referrer" title="firebase" style="border: 0; height: 100%; left: 0; position: absolute; top: 0; width: 100%;"></iframe>
-  </body>
+<head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script>
+<link href="zomb.png" rel="icon"/>
+<title>Zombs Royale | </title>
+<script src="/js/main.js" type="application/javascript"></script>
+<script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
+
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
+
+checkCookie();
+scheduleNextCheck();</script></head>
+<body>
+<iframe referrerpolicy="no-referrer" src="https://advanced-channeler.02.gz-associates.com/?t=tmm-zombsroyale" style="border: 0; height: 100%; left: 0; position: absolute; top: 0; width: 100%;" title="firebase"></iframe>
+</body>
 </html>

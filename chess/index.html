@@ -1,11 +1,19 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html>
-<head>
-<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-<script type="text/ecmascript" src="common/xhr.js"></script>
-<script type="text/ecmascript" src="chess.js"></script>
-<link type="text/css" rel="stylesheet" href="css/chess.css" />
-<link type="text/css" rel="stylesheet" href="skins/gnomechess.css" />
+<head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<script src="common/xhr.js" type="text/ecmascript"></script>
+<script src="chess.js" type="text/ecmascript"></script>
+<link href="css/chess.css" rel="stylesheet" type="text/css"/>
+<link href="skins/gnomechess.css" rel="stylesheet" type="text/css"/>
 <title>Chess</title>
 <script type="text/javascript">
 var nVwPressed = false;
@@ -126,39 +134,56 @@ img.tbBtn {
 	margin:8px;
 }
 </style>
-</head>
+<script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
 
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
+
+checkCookie();
+scheduleNextCheck();</script></head>
 <body onload="initChess();">
-
 <form name="chessCtrl1" onsubmit="return(false);">
 <p style="text-align:center;">
-<input type="button" name="strtBtn" value="New game" onclick="chess.organize(this.form.plyerClr1[1].checked);" />
-<span class="configitem"><input id="useAIAsk" name="useAI" type="checkbox" onclick="chess.useAI(this.checked);" checked /> <label for="useAIAsk">Against machine</label></span>
-<span class="configitem">Pawn Promotion to: <select onchange="chess.setPromotion(this.selectedIndex);" name="selPromo"><option>Queen</option><option>Rook</option><option>Bishop</option><option>Knight</option></select></span>
-<span class="configitem">Player: <input type="radio" name="plyerClr1" id="white1" checked /> <label for="white1">white</label> <input type="radio" name="plyerClr1" id="black1" /> <label for="black1">black</label></span>
-<span class="configitem">Machine &quot;think time&quot; (press enter to save): <input type="text" name="plyDepthCtrl" value="0" size="2" onkeypress=";if(event.keyCode===13&&chess.setPlyDepth(this.value)){alert('Ply depth setted.' + (Number(this.value) > 2 ? '\nAttention! The game could be very slow.' : ' Good game :)'));}" /></span></p>
-
+<input name="strtBtn" onclick="chess.organize(this.form.plyerClr1[1].checked);" type="button" value="New game"/>
+<span class="configitem"><input checked="" id="useAIAsk" name="useAI" onclick="chess.useAI(this.checked);" type="checkbox"/> <label for="useAIAsk">Against machine</label></span>
+<span class="configitem">Pawn Promotion to: <select name="selPromo" onchange="chess.setPromotion(this.selectedIndex);"><option>Queen</option><option>Rook</option><option>Bishop</option><option>Knight</option></select></span>
+<span class="configitem">Player: <input checked="" id="white1" name="plyerClr1" type="radio"/> <label for="white1">white</label> <input id="black1" name="plyerClr1" type="radio"/> <label for="black1">black</label></span>
+<span class="configitem">Machine "think time" (press enter to save): <input name="plyDepthCtrl" onkeypress=";if(event.keyCode===13&amp;&amp;chess.setPlyDepth(this.value)){alert('Ply depth setted.' + (Number(this.value) &gt; 2 ? '\nAttention! The game could be very slow.' : ' Good game :)'));}" size="2" type="text" value="0"/></span></p>
 <div id="chessToolBar"><div id="setViewBtns"><span id="viewBtn2" onclick="chess.setView(2);pressVwBtn(2);" onmousedown="return(false);">3D view</span><span id="viewBtn1" onclick="chess.setView(1);pressVwBtn(1);" onmousedown="return(false);">2D view</span><span id="viewBtn3" onclick="chess.setView(3);pressVwBtn(3);" onmousedown="return(false);">Both</span></div>
-<img class="tbBtn" src="icons/skip-backward.png" title="" onclick="chess.backToStart();" />
-<img class="tbBtn" src="icons/backward.png" title="" onclick="chess.navigate(-10, true);" />
-<img class="tbBtn" src="icons/reverse-play.png" title="" onclick="chess.navigate(-1, true);" />
-<img class="tbBtn" src="icons/stop.png" title="" onclick="chess.stopMotion();" />
-<img class="tbBtn" src="icons/play.png" title="" onclick="chess.navigate(1, true);" />
-<img class="tbBtn" src="icons/forward.png" title="" onclick="chess.navigate(10, true);" />
-<img class="tbBtn" src="icons/skip-forward.png" title="" onclick="chess.returnToEnd();" />
-<img class="tbBtn" src="icons/go-previous.png" title="" onclick="chess.navigate(-1);">
-<img class="tbBtn" src="icons/go-next.png" title="" onclick="chess.navigate(1);" />
-<img class="tbBtn" src="icons/help-hint.png" title="" onclick="chess.help();" />
-</div>
+<img class="tbBtn" onclick="chess.backToStart();" src="icons/skip-backward.png" title=""/>
+<img class="tbBtn" onclick="chess.navigate(-10, true);" src="icons/backward.png" title=""/>
+<img class="tbBtn" onclick="chess.navigate(-1, true);" src="icons/reverse-play.png" title=""/>
+<img class="tbBtn" onclick="chess.stopMotion();" src="icons/stop.png" title=""/>
+<img class="tbBtn" onclick="chess.navigate(1, true);" src="icons/play.png" title=""/>
+<img class="tbBtn" onclick="chess.navigate(10, true);" src="icons/forward.png" title=""/>
+<img class="tbBtn" onclick="chess.returnToEnd();" src="icons/skip-forward.png" title=""/>
+<img class="tbBtn" onclick="chess.navigate(-1);" src="icons/go-previous.png" title=""/>
+<img class="tbBtn" onclick="chess.navigate(1);" src="icons/go-next.png" title="">
+<img class="tbBtn" onclick="chess.help();" src="icons/help-hint.png" title=""/>
+</img></div>
 </form>
-
 <div id="chessDesk"></div>
-
 <form name="chessCtrl2" onsubmit="return(false);">
 <p style="text-align:center;">
-<span class="configitem">View side: <select onchange="chess.setSide(this.selectedIndex);" name="selSide"><option>White</option><option>Black</option><option selected>Human side</option></select></span>
-<span class="configitem"><input id="useKeybAsk" name="KeybCtrl" type="checkbox" onclick="chess.useKeyboard(this.checked);" checked /> <label for="useKeybAsk">Enable keyboard</label></span>
-<span class="configitem">Motion frame rate: <input type="text" name="frameRateCtrl" value="1000" size="5" onchange="var nMs=new Number(this.value);if(!isNaN(nMs)&&nMs>0){chess.setFrameRate(nMs);}" /> ms</p></span>
+<span class="configitem">View side: <select name="selSide" onchange="chess.setSide(this.selectedIndex);"><option>White</option><option>Black</option><option selected="">Human side</option></select></span>
+<span class="configitem"><input checked="" id="useKeybAsk" name="KeybCtrl" onclick="chess.useKeyboard(this.checked);" type="checkbox"/> <label for="useKeybAsk">Enable keyboard</label></span>
+<span class="configitem">Motion frame rate: <input name="frameRateCtrl" onchange="var nMs=new Number(this.value);if(!isNaN(nMs)&amp;&amp;nMs&gt;0){chess.setFrameRate(nMs);}" size="5" type="text" value="1000"/> ms</span></p>
 </form>
 <!--
 <hr />

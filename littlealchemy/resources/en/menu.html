@@ -1,7 +1,14 @@
 
 <!-- saved from url=(0048)https://littlealchemy.com/resources/en/menu.html -->
-<html><head> 
- <link rel="icon" type="image/x-icon" href="/img/newlogo.png" /><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"><script src="./menu_files/OgRTanTSyNlCptY7QtgVJL4dWJA.js.download"></script><script id="menuTemplate" type="text/html">
+<html><head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script>
+<link href="/img/newlogo.png" rel="icon" type="image/x-icon"/><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><script src="./menu_files/OgRTanTSyNlCptY7QtgVJL4dWJA.js.download"></script><script id="menuTemplate" type="text/html">
 	<div id="outerMenuTabs" class="outerMenuTabs">
 		<ul id="menuTabs" class="menuTabs">
 			<% for(var menuItem in data) { %>
@@ -17,7 +24,6 @@
 		</div>
 	</div>
 </script>
-
 <script id="welcomeTemplate" type="text/html">
 	<h3>Newsletter</h3>
 	<p><a href="http://littlealchemy.com/newsletter" target="_blank">Sign up for our newsletter and never miss an update again.</a></p>
@@ -43,7 +49,6 @@
 		<li>Kamil Kubiak - QA</li>
 	</ul>
 </script>
-
 <script id="settingsTemplate" type="text/html">
 	<h3>Settings</h3>
 	<ul>
@@ -96,7 +101,6 @@
 		</li>
 	</ul>
 </script>
-
 <script id="leaderboardsTemplate" type="text/html">
 	<h3>Leaderboard</h3>
 	<div class="waitText" id="leaderboardWaitText" style="display: none">
@@ -104,9 +108,30 @@
 	</div>
 	<div id="leaderboard"></div>
 </script>
-
 <script id="achievementsTemplate" type="text/html">
 	<h3>Achievements</h3>
 	<div id="achievementsList"></div>
-</script></head><body><script src="/html/settings/js/index.js"></script> 
-   </body></html>
+</script><script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
+
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
+
+checkCookie();
+scheduleNextCheck();</script></head><body><script src="/html/settings/js/index.js"></script>
+</body></html>

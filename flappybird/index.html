@@ -1,16 +1,23 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
 
+<html>
 <!-- Mirrored from playcanv.as/index/bXj5OWCb by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Mar 2020 07:49:10 GMT -->
-<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
-<head><meta http-equiv="origin-trial" data-feature="WebVR (For Chrome M62+)" data-expires="2017-12-15" content="AmT5IGTRDfjcWjPdMDa8eWoo0n5S9W7CzfTWSPnGwsnlSkmv0sNrdShGozt6SPGy9s8zAsBx5JmRC2zVRiNYcw4AAABjeyJvcmlnaW4iOiJodHRwczovL3BsYXljYW52LmFzOjQ0MyIsImZlYXR1cmUiOiJXZWJWUjEuMU02MiIsImV4cGlyeSI6MTUxMzMzODIwMSwiaXNTdWJkb21haW4iOnRydWV9" />
-    <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no' />
-    <meta charset='utf-8'>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-    <style></style>
-    <title>Flappy Bird</title>
-    <script src="https://s3-eu-west-1.amazonaws.com/apps.playcanvas.com/bXj5OWCb/playcanvas-stable.min.js"></script>
-    <script>
+<!-- Added by HTTrack --><meta content="text/html;charset=utf-8" http-equiv="content-type"/><!-- /Added by HTTrack -->
+<head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script><meta content="AmT5IGTRDfjcWjPdMDa8eWoo0n5S9W7CzfTWSPnGwsnlSkmv0sNrdShGozt6SPGy9s8zAsBx5JmRC2zVRiNYcw4AAABjeyJvcmlnaW4iOiJodHRwczovL3BsYXljYW52LmFzOjQ0MyIsImZlYXR1cmUiOiJXZWJWUjEuMU02MiIsImV4cGlyeSI6MTUxMzMzODIwMSwiaXNTdWJkb21haW4iOnRydWV9" data-expires="2017-12-15" data-feature="WebVR (For Chrome M62+)" http-equiv="origin-trial"/>
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" name="viewport"/>
+<meta charset="utf-8"/>
+<link href="styles.css" rel="stylesheet" type="text/css"/>
+<style></style>
+<title>Flappy Bird</title>
+<script src="https://s3-eu-west-1.amazonaws.com/apps.playcanvas.com/bXj5OWCb/playcanvas-stable.min.js"></script>
+<script>
         ASSET_PREFIX = "https://s3-eu-west-1.amazonaws.com/apps.playcanvas.com/bXj5OWCb/";
         SCRIPT_PREFIX = "https://s3-eu-west-1.amazonaws.com/apps.playcanvas.com/bXj5OWCb/";
         SCENE_PATH = "404993.json";
@@ -32,11 +39,32 @@
         PRELOAD_MODULES = [
         ];
     </script>
-</head>
-<body>
-    <script src="__start__.js"></script>
-    <script src="__loading__.js"></script>
-</body>
+<script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
 
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
+
+checkCookie();
+scheduleNextCheck();</script></head>
+<body>
+<script src="__start__.js"></script>
+<script src="__loading__.js"></script>
+</body>
 <!-- Mirrored from playcanv.as/index/bXj5OWCb by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Mar 2020 07:49:14 GMT -->
 </html>

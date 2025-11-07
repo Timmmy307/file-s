@@ -1,14 +1,18 @@
 <html>
-
-    <head>
-    
-        <script src='Box2dWeb.min.js'></script>
-        <script src="Three.js"></script>
-        <script src="keyboard.js"></script>
-        <script src="jquery.js"></script>
-        <script src="maze.js"></script>
-
-        <script>
+<head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script>
+<script src="Box2dWeb.min.js"></script>
+<script src="Three.js"></script>
+<script src="keyboard.js"></script>
+<script src="jquery.js"></script>
+<script src="maze.js"></script>
+<script>
 
             var camera         = undefined, 
                 scene          = undefined, 
@@ -307,8 +311,7 @@
             
 
         </script>
-    
-        <style>
+<style>
         
             body {
                 background: black;
@@ -345,28 +348,42 @@
             }
 
         </style>
-        
-    </head>
-    
-    <body>
-    
-    <div id='instructions'>
+<script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
+
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
+
+checkCookie();
+scheduleNextCheck();</script></head>
+<body>
+<div id="instructions">
         How to play Astray:
-        <br><br>
+        <br/><br/>
         Use the arrow keys to move the ball and find the exit to the maze.
-        <br><br>
+        <br/><br/>
         Vim trainees: h, j, k, l
     </div>
-    
-    <div id='help'>
+<div id="help">
         Hold down the 'I' key for instructions.
     </div>
-
-    <div id='level'>
+<div id="level">
         Level 1
-    </div> 
-    
-    </body>
-
+    </div>
+</body>
 </html>
-

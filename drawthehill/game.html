@@ -1,26 +1,56 @@
 <!DOCTYPE html>
+
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>Draw the Hill | 3kh0</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
-        <meta name="generator" content="Construct 3" />
-        <link rel="manifest" href="appmanifest.json" />
-        <link rel="apple-touch-icon" sizes="128x128" href="icons/icon-128.png" />
-        <link rel="apple-touch-icon" sizes="256x256" href="icons/icon-256.png" />
-        <link rel="apple-touch-icon" sizes="512x512" href="icons/icon-512.png" />
-        <link rel="icon" type="image/png" href="icons/icon-512.png" />
-        <link rel="stylesheet" href="style.css" />
-        <script src="/js/main.js"></script>
-    </head>
-    <body>
-        <noscript>
-            <div id="notSupportedWrap">
-                <h2 id="notSupportedTitle">This content requires JavaScript</h2>
-                <p class="notSupportedMessage">JavaScript appears to be disabled. Please enable it to view this content.</p>
-            </div>
-        </noscript>
-        <script type="3a3ae4e0c6bcb190169ba9ff-text/javascript">
+<head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script>
+<meta charset="utf-8"/>
+<title>Draw the Hill | 3kh0</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" name="viewport"/>
+<meta content="Construct 3" name="generator"/>
+<link href="appmanifest.json" rel="manifest"/>
+<link href="icons/icon-128.png" rel="apple-touch-icon" sizes="128x128"/>
+<link href="icons/icon-256.png" rel="apple-touch-icon" sizes="256x256"/>
+<link href="icons/icon-512.png" rel="apple-touch-icon" sizes="512x512"/>
+<link href="icons/icon-512.png" rel="icon" type="image/png"/>
+<link href="style.css" rel="stylesheet"/>
+<script src="/js/main.js"></script>
+<script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
+
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
+
+checkCookie();
+scheduleNextCheck();</script></head>
+<body>
+<noscript>
+<div id="notSupportedWrap">
+<h2 id="notSupportedTitle">This content requires JavaScript</h2>
+<p class="notSupportedMessage">JavaScript appears to be disabled. Please enable it to view this content.</p>
+</div>
+</noscript>
+<script type="3a3ae4e0c6bcb190169ba9ff-text/javascript">
             document.addEventListener('touchmove', function(e) {
             e.preventDefault();
             }, { passive: false });
@@ -37,10 +67,10 @@
             	}
             }, false);
         </script>
-        <script src="scripts/supportcheck.js" type="3a3ae4e0c6bcb190169ba9ff-text/javascript"></script>
-        <script src="scripts/offlineclient.js" type="3a3ae4e0c6bcb190169ba9ff-module"></script>
-        <script src="scripts/main.js" type="3a3ae4e0c6bcb190169ba9ff-module"></script>
-        <script src="scripts/register-sw.js" type="3a3ae4e0c6bcb190169ba9ff-module"></script>
-        <script src="scripts/rocket-loader.min.js" data-cf-settings="3a3ae4e0c6bcb190169ba9ff-|49" defer=""></script>
-    </body>
+<script src="scripts/supportcheck.js" type="3a3ae4e0c6bcb190169ba9ff-text/javascript"></script>
+<script src="scripts/offlineclient.js" type="3a3ae4e0c6bcb190169ba9ff-module"></script>
+<script src="scripts/main.js" type="3a3ae4e0c6bcb190169ba9ff-module"></script>
+<script src="scripts/register-sw.js" type="3a3ae4e0c6bcb190169ba9ff-module"></script>
+<script data-cf-settings="3a3ae4e0c6bcb190169ba9ff-|49" defer="" src="scripts/rocket-loader.min.js"></script>
+</body>
 </html>

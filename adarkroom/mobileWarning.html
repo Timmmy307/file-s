@@ -1,9 +1,17 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html>
-<head>
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-	<title>A Dark Room</title>
-	<style>
+<head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script>
+<meta content="initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+<title>A Dark Room</title>
+<style>
     body {
         background-color: #000000;
         color: #FFFFFF;
@@ -36,23 +44,44 @@
         margin-top: 20px;
     }
 	</style>
-</head>
+<script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
+
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
+
+checkCookie();
+scheduleNextCheck();</script></head>
 <body>
-<img class="logo" src="img/Logo1.jpg" />
+<img class="logo" src="img/Logo1.jpg"/>
 <p>
     A Dark Room isn't mobile-friendly, and it requires arrow keys.
-    <br>
+    <br/>
     Sorry about that!
 </p>
 <p>
   There are native apps, though! Get them now!
 </p>
-<a class="storeLink" href="https://itunes.apple.com/app/apple-store/id736683061?pt=2073437&ct=mobilesplash&mt=8">
-    <img class="store" src="http://i.imgur.com/DMdnDYq.png" alt="App Store">
+<a class="storeLink" href="https://itunes.apple.com/app/apple-store/id736683061?pt=2073437&amp;ct=mobilesplash&amp;mt=8">
+<img alt="App Store" class="store" src="http://i.imgur.com/DMdnDYq.png"/>
 </a>
-<a class="storeLink" href = "https://play.google.com/store/apps/details?id=com.yourcompany.adarkroom&hl=en">
-    <img class="store" src="http://i.imgur.com/bLWWj4r.png" alt="Google Play">
+<a class="storeLink" href="https://play.google.com/store/apps/details?id=com.yourcompany.adarkroom&amp;hl=en">
+<img alt="Google Play" class="store" src="http://i.imgur.com/bLWWj4r.png"/>
 </a>
-
 </body>
 </html>

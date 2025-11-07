@@ -1,14 +1,20 @@
 <!DOCTYPE html>
+
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>The History of Microsoft Flight Simulator</title>
-
-    <script src="bzip2.js"></script>
-    <script src="dos.js"></script>
-
-    <style>
+<head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<title>The History of Microsoft Flight Simulator</title>
+<script src="bzip2.js"></script>
+<script src="dos.js"></script>
+<style>
         html, body {
             /*margin: 0;*/
             background-color: #000000;
@@ -128,193 +134,144 @@
         }
 
     </style>
+<script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
 
-</head>
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
+
+checkCookie();
+scheduleNextCheck();</script></head>
 <body onload="Main(4)">
-
 <div class="grid-container">
-
-    <div class="div1">
-        <canvas id="screen" width="640" height="480">
+<div class="div1">
+<canvas height="480" id="screen" width="640">
             Your browser does not support the canvas element.
         </canvas>
-    </div>
-
-    <div class="div2">
-
-        <a href="https://github.com/s-macke/FSHistory">
-            <img src="images/GitHub-Mark-64px.png" style="filter: invert(1);" width="50px"/>
-        </a>
-        <img src="images/title.png" width="70%" style="display:inline-block; float: right; clear:right;"/>
-        <h3> THE HISTORY OF <br/>MICROSOFT FLIGHT SIMULATOR</h3>
-
-        <svg viewBox="-0.5 0.5 6.2 7.2" overflow="auto">
-            <defs>
-                <g id="button">
-                    <filter id="blur-filter" x="-2" y="-2" width="200" height="200">
-                        <feGaussianBlur in="SourceGraphic" stdDeviation="0.1"/>
-                    </filter>
-                    <path d="M -0.35 -0.35   0.35 -0.35   0.35 0.35  -0.35 0.35 z"
-                          stroke-width="0.05"
-                          stroke-linejoin="round"
-                          stroke="#a0a0a0"
-                          fill="#000000"
-                          fill-opacity="0.0"
-                          filter="url(#blur-filter)"
-                    />
-                    <path d="M -0.35 -0.35   0.35 -0.35   0.35 0.35  -0.35 0.35 z"
-                          stroke-width="0.05"
-                          stroke-linejoin="round"
-                          stroke="#6a7f80"
-                          fill="none"
-                    />
-                </g>
-                <g id="arrows">
-                    <g onmousedown="game.KeyDown(getScancode('ArrowUp'));"
-                       onmouseup="game.KeyUp(getScancode('ArrowUp'));"
-                       ontouchstart="game.KeyDown(getScancode('ArrowUp'));"
-                       ontouchend="game.KeyUp(getScancode('ArrowUp'));">
-                        <use x="0" y="0" xlink:href="#button"/>
-                        <text x="0" y="0" font-weight="bold" transform="translate(-0.0 0.15)" text-anchor="middle">↑</text>
-                    </g>
-
-                    <g onmousedown="game.KeyDown(getScancode('ArrowLeft'));"
-                       onmouseup="game.KeyUp(getScancode('ArrowLeft'));"
-                       ontouchstart="game.KeyDown(getScancode('ArrowLeft'));"
-                       ontouchend="game.KeyUp(getScancode('ArrowLeft'));">
-                        <use x="-1" y="1" xlink:href="#button"/>
-                        <text x="-1" y="1" font-weight="bold" transform="translate(-0.0 0.15)" text-anchor="middle">←</text>
-                    </g>
-
-                    <g onmousedown="game.KeyDown(getScancode('ArrowDown'));"
-                       onmouseup="game.KeyUp(getScancode('ArrowDown'));"
-                       ontouchstart="game.KeyDown(getScancode('ArrowDown'));"
-                       ontouchend="game.KeyUp(getScancode('ArrowDown'));">
-                        <use x="0" y="1" xlink:href="#button"/>
-                        <text x="0" y="1" font-weight="bold" transform="translate(-0.0 0.15)" text-anchor="middle">↓</text>
-                    </g>
-
-                    <g onmousedown="game.KeyDown(getScancode('ArrowRight'));"
-                       onmouseup="game.KeyUp(getScancode('ArrowRight'));"
-                       ontouchstart="game.KeyDown(getScancode('ArrowRight'));"
-                       ontouchend="game.KeyUp(getScancode('ArrowRight'));">
-                        <use x="1" y="1" xlink:href="#button"/>
-                        <text x="1" y="1" font-weight="bold" transform="translate(-0.0 0.15)" text-anchor="middle">→</text>
-                    </g>
-                </g>
-            </defs>
-            <g font-size="0.35" fill="white">
-                <use x="1.5" y="1" xlink:href="#arrows"/>
-                <text x="3.5" y="1" transform="translate(1.2 0.5)" fill="#6c6c6c" font-size="0.3" text-anchor="end">Steering</text>
-                <line x1="3" y1="1.65" x2="4.7" y2="1.65" style="stroke:#6c6c6c;stroke-width:0.025" />
-
-                <g onmousedown="game.KeyDown(getScancode('F1'));"
-                   onmouseup="game.KeyUp(getScancode('F1'));"
-                   ontouchstart="game.KeyDown(getScancode('F1'));"
-                   ontouchend="game.KeyUp(getScancode('F1'));">
-                    <use x="1" y="3" xlink:href="#button"/>
-                    <text x="1" y="3" font-weight="bold" transform="translate(-0.0 0.15)" text-anchor="middle">F1</text>
-                </g>
-
-                <g onmousedown="game.KeyDown(getScancode('F4'));"
-                   onmouseup="game.KeyUp(getScancode('F4'));"
-                   ontouchstart="game.KeyDown(getScancode('F4'));"
-                   ontouchend="game.KeyUp(getScancode('F4'));">
-                    <use x="2" y="3" xlink:href="#button"/>
-                    <text x="2" y="3" font-weight="bold" transform="translate(-0.0 0.15)" text-anchor="middle">F4</text>
-                </g>
-                <text x="3.5" y="2.5" transform="translate(1.2 0.5)" fill="#6c6c6c" font-size="0.3" text-anchor="end">Thrust</text>
-                <line x1="3" y1="3.15" x2="4.7" y2="3.15" style="stroke:#6c6c6c;stroke-width:0.025" />
-
-                <g onmousedown="game.KeyDown(getScancode('F5'));"
-                   onmouseup="game.KeyUp(getScancode('F5'));"
-                   ontouchstart="game.KeyDown(getScancode('F5'));"
-                   ontouchend="game.KeyUp(getScancode('F5'));">
-                    <use x="1" y="4" xlink:href="#button"/>
-                    <text x="1" y="4" font-weight="bold" transform="translate(-0.0 0.15)" text-anchor="middle">F5</text>
-                </g>
-
-                <g onmousedown="game.KeyDown(getScancode('F8'));"
-                   onmouseup="game.KeyUp(getScancode('F8'));"
-                   ontouchstart="game.KeyDown(getScancode('F8'));"
-                   ontouchend="game.KeyUp(getScancode('F8'));">
-                    <use x="2" y="4" xlink:href="#button"/>
-                    <text x="2" y="4" font-weight="bold" transform="translate(-0.0 0.15)" text-anchor="middle">F8</text>
-                </g>
-
-                <text x="3.5" y="3.5" transform="translate(1.2 0.5)" fill="#6c6c6c" font-size="0.3" text-anchor="end">Flaps</text>
-                <line x1="3" y1="4.15" x2="4.7" y2="4.15" style="stroke:#6c6c6c;stroke-width:0.025" />
-
-                <g onmousedown="game.KeyDown(getScancode('KeyG'));"
-                   onmouseup="game.KeyUp(getScancode('KeyG'));"
-                   ontouchstart="game.KeyDown(getScancode('KeyG'));"
-                   ontouchend="game.KeyUp(getScancode('KeyG'));">
-                    <use x="1.5" y="5" xlink:href="#button"/>
-                    <text x="1.5" y="5" font-weight="bold" transform="translate(-0.0 0.15)" text-anchor="middle">G</text>
-                </g>
-                <text x="3.5" y="4.5" transform="translate(1.2 0.5)" fill="#6c6c6c" font-size="0.3" text-anchor="end">Gear</text>
-                <line x1="3" y1="5.15" x2="4.7" y2="5.15" style="stroke:#6c6c6c;stroke-width:0.025" />
-
-                <g onmousedown="game.KeyDown(getScancode('KeyS'));"
-                   onmouseup="game.KeyUp(getScancode('KeyS'));"
-                   ontouchstart="game.KeyDown(getScancode('KeyS'));"
-                   ontouchend="game.KeyUp(getScancode('KeyS'));">
-                    <use x="1.5" y="6" xlink:href="#button"/>
-                    <text x="1.5" y="6" font-weight="bold" transform="translate(-0.0 0.15)" text-anchor="middle">S</text>
-                </g>
-                <text x="3.5" y="5.5" transform="translate(1.2 0.5)" fill="#6c6c6c" font-size="0.3" text-anchor="end">View</text>
-                <line x1="3" y1="6.15" x2="4.7" y2="6.15" style="stroke:#6c6c6c;stroke-width:0.025" />
-
-                <g onmousedown="game.KeyDown(getScancode('KeyA'));"
-                   onmouseup="game.KeyUp(getScancode('KeyA'));"
-                   ontouchstart="game.KeyDown(getScancode('KeyA'));"
-                   ontouchend="game.KeyUp(getScancode('KeyA'));">
-                    <use x="0.5" y="7" xlink:href="#button"/>
-                    <text x="0.5" y="7" font-weight="bold" transform="translate(-0.0 0.15)" text-anchor="middle">A</text>
-                </g>
-                <g onmousedown="game.KeyDown(getScancode('KeyB'));"
-                   onmouseup="game.KeyUp(getScancode('KeyB'));"
-                   ontouchstart="game.KeyDown(getScancode('KeyB'));"
-                   ontouchend="game.KeyUp(getScancode('KeyB'));">
-                    <use x="1.5" y="7" xlink:href="#button"/>
-                    <text x="1.5" y="7" font-weight="bold" transform="translate(-0.0 0.15)" text-anchor="middle">B</text>
-                </g>
-                <g onmousedown="game.KeyDown(getScancode('KeyC'));"
-                   onmouseup="game.KeyUp(getScancode('KeyC'));"
-                   ontouchstart="game.KeyDown(getScancode('KeyC'));"
-                   ontouchend="game.KeyUp(getScancode('KeyC'));">
-                    <use x="2.5" y="7" xlink:href="#button"/>
-                    <text x="2.5" y="7" font-weight="bold" transform="translate(-0.0 0.15)" text-anchor="middle">C</text>
-                </g>
-                <text x="3.5" y="6.5" transform="translate(1.2 0.5)" fill="#6c6c6c" font-size="0.3" text-anchor="end">Options</text>
-                <line x1="3" y1="7.15" x2="4.7" y2="7.15" style="stroke:#6c6c6c;stroke-width:0.025" />
-            </g>
-        </svg>
-
-        <script>
+</div>
+<div class="div2">
+<a href="https://github.com/s-macke/FSHistory">
+<img src="images/GitHub-Mark-64px.png" style="filter: invert(1);" width="50px"/>
+</a>
+<img src="images/title.png" style="display:inline-block; float: right; clear:right;" width="70%"/>
+<h3> THE HISTORY OF <br/>MICROSOFT FLIGHT SIMULATOR</h3>
+<svg overflow="auto" viewbox="-0.5 0.5 6.2 7.2">
+<defs>
+<g id="button">
+<filter height="200" id="blur-filter" width="200" x="-2" y="-2">
+<fegaussianblur in="SourceGraphic" stddeviation="0.1"></fegaussianblur>
+</filter>
+<path d="M -0.35 -0.35   0.35 -0.35   0.35 0.35  -0.35 0.35 z" fill="#000000" fill-opacity="0.0" filter="url(#blur-filter)" stroke="#a0a0a0" stroke-linejoin="round" stroke-width="0.05"></path>
+<path d="M -0.35 -0.35   0.35 -0.35   0.35 0.35  -0.35 0.35 z" fill="none" stroke="#6a7f80" stroke-linejoin="round" stroke-width="0.05"></path>
+</g>
+<g id="arrows">
+<g onmousedown="game.KeyDown(getScancode('ArrowUp'));" onmouseup="game.KeyUp(getScancode('ArrowUp'));" ontouchend="game.KeyUp(getScancode('ArrowUp'));" ontouchstart="game.KeyDown(getScancode('ArrowUp'));">
+<use x="0" xlink:href="#button" y="0"></use>
+<text font-weight="bold" text-anchor="middle" transform="translate(-0.0 0.15)" x="0" y="0">↑</text>
+</g>
+<g onmousedown="game.KeyDown(getScancode('ArrowLeft'));" onmouseup="game.KeyUp(getScancode('ArrowLeft'));" ontouchend="game.KeyUp(getScancode('ArrowLeft'));" ontouchstart="game.KeyDown(getScancode('ArrowLeft'));">
+<use x="-1" xlink:href="#button" y="1"></use>
+<text font-weight="bold" text-anchor="middle" transform="translate(-0.0 0.15)" x="-1" y="1">←</text>
+</g>
+<g onmousedown="game.KeyDown(getScancode('ArrowDown'));" onmouseup="game.KeyUp(getScancode('ArrowDown'));" ontouchend="game.KeyUp(getScancode('ArrowDown'));" ontouchstart="game.KeyDown(getScancode('ArrowDown'));">
+<use x="0" xlink:href="#button" y="1"></use>
+<text font-weight="bold" text-anchor="middle" transform="translate(-0.0 0.15)" x="0" y="1">↓</text>
+</g>
+<g onmousedown="game.KeyDown(getScancode('ArrowRight'));" onmouseup="game.KeyUp(getScancode('ArrowRight'));" ontouchend="game.KeyUp(getScancode('ArrowRight'));" ontouchstart="game.KeyDown(getScancode('ArrowRight'));">
+<use x="1" xlink:href="#button" y="1"></use>
+<text font-weight="bold" text-anchor="middle" transform="translate(-0.0 0.15)" x="1" y="1">→</text>
+</g>
+</g>
+</defs>
+<g fill="white" font-size="0.35">
+<use x="1.5" xlink:href="#arrows" y="1"></use>
+<text fill="#6c6c6c" font-size="0.3" text-anchor="end" transform="translate(1.2 0.5)" x="3.5" y="1">Steering</text>
+<line style="stroke:#6c6c6c;stroke-width:0.025" x1="3" x2="4.7" y1="1.65" y2="1.65"></line>
+<g onmousedown="game.KeyDown(getScancode('F1'));" onmouseup="game.KeyUp(getScancode('F1'));" ontouchend="game.KeyUp(getScancode('F1'));" ontouchstart="game.KeyDown(getScancode('F1'));">
+<use x="1" xlink:href="#button" y="3"></use>
+<text font-weight="bold" text-anchor="middle" transform="translate(-0.0 0.15)" x="1" y="3">F1</text>
+</g>
+<g onmousedown="game.KeyDown(getScancode('F4'));" onmouseup="game.KeyUp(getScancode('F4'));" ontouchend="game.KeyUp(getScancode('F4'));" ontouchstart="game.KeyDown(getScancode('F4'));">
+<use x="2" xlink:href="#button" y="3"></use>
+<text font-weight="bold" text-anchor="middle" transform="translate(-0.0 0.15)" x="2" y="3">F4</text>
+</g>
+<text fill="#6c6c6c" font-size="0.3" text-anchor="end" transform="translate(1.2 0.5)" x="3.5" y="2.5">Thrust</text>
+<line style="stroke:#6c6c6c;stroke-width:0.025" x1="3" x2="4.7" y1="3.15" y2="3.15"></line>
+<g onmousedown="game.KeyDown(getScancode('F5'));" onmouseup="game.KeyUp(getScancode('F5'));" ontouchend="game.KeyUp(getScancode('F5'));" ontouchstart="game.KeyDown(getScancode('F5'));">
+<use x="1" xlink:href="#button" y="4"></use>
+<text font-weight="bold" text-anchor="middle" transform="translate(-0.0 0.15)" x="1" y="4">F5</text>
+</g>
+<g onmousedown="game.KeyDown(getScancode('F8'));" onmouseup="game.KeyUp(getScancode('F8'));" ontouchend="game.KeyUp(getScancode('F8'));" ontouchstart="game.KeyDown(getScancode('F8'));">
+<use x="2" xlink:href="#button" y="4"></use>
+<text font-weight="bold" text-anchor="middle" transform="translate(-0.0 0.15)" x="2" y="4">F8</text>
+</g>
+<text fill="#6c6c6c" font-size="0.3" text-anchor="end" transform="translate(1.2 0.5)" x="3.5" y="3.5">Flaps</text>
+<line style="stroke:#6c6c6c;stroke-width:0.025" x1="3" x2="4.7" y1="4.15" y2="4.15"></line>
+<g onmousedown="game.KeyDown(getScancode('KeyG'));" onmouseup="game.KeyUp(getScancode('KeyG'));" ontouchend="game.KeyUp(getScancode('KeyG'));" ontouchstart="game.KeyDown(getScancode('KeyG'));">
+<use x="1.5" xlink:href="#button" y="5"></use>
+<text font-weight="bold" text-anchor="middle" transform="translate(-0.0 0.15)" x="1.5" y="5">G</text>
+</g>
+<text fill="#6c6c6c" font-size="0.3" text-anchor="end" transform="translate(1.2 0.5)" x="3.5" y="4.5">Gear</text>
+<line style="stroke:#6c6c6c;stroke-width:0.025" x1="3" x2="4.7" y1="5.15" y2="5.15"></line>
+<g onmousedown="game.KeyDown(getScancode('KeyS'));" onmouseup="game.KeyUp(getScancode('KeyS'));" ontouchend="game.KeyUp(getScancode('KeyS'));" ontouchstart="game.KeyDown(getScancode('KeyS'));">
+<use x="1.5" xlink:href="#button" y="6"></use>
+<text font-weight="bold" text-anchor="middle" transform="translate(-0.0 0.15)" x="1.5" y="6">S</text>
+</g>
+<text fill="#6c6c6c" font-size="0.3" text-anchor="end" transform="translate(1.2 0.5)" x="3.5" y="5.5">View</text>
+<line style="stroke:#6c6c6c;stroke-width:0.025" x1="3" x2="4.7" y1="6.15" y2="6.15"></line>
+<g onmousedown="game.KeyDown(getScancode('KeyA'));" onmouseup="game.KeyUp(getScancode('KeyA'));" ontouchend="game.KeyUp(getScancode('KeyA'));" ontouchstart="game.KeyDown(getScancode('KeyA'));">
+<use x="0.5" xlink:href="#button" y="7"></use>
+<text font-weight="bold" text-anchor="middle" transform="translate(-0.0 0.15)" x="0.5" y="7">A</text>
+</g>
+<g onmousedown="game.KeyDown(getScancode('KeyB'));" onmouseup="game.KeyUp(getScancode('KeyB'));" ontouchend="game.KeyUp(getScancode('KeyB'));" ontouchstart="game.KeyDown(getScancode('KeyB'));">
+<use x="1.5" xlink:href="#button" y="7"></use>
+<text font-weight="bold" text-anchor="middle" transform="translate(-0.0 0.15)" x="1.5" y="7">B</text>
+</g>
+<g onmousedown="game.KeyDown(getScancode('KeyC'));" onmouseup="game.KeyUp(getScancode('KeyC'));" ontouchend="game.KeyUp(getScancode('KeyC'));" ontouchstart="game.KeyDown(getScancode('KeyC'));">
+<use x="2.5" xlink:href="#button" y="7"></use>
+<text font-weight="bold" text-anchor="middle" transform="translate(-0.0 0.15)" x="2.5" y="7">C</text>
+</g>
+<text fill="#6c6c6c" font-size="0.3" text-anchor="end" transform="translate(1.2 0.5)" x="3.5" y="6.5">Options</text>
+<line style="stroke:#6c6c6c;stroke-width:0.025" x1="3" x2="4.7" y1="7.15" y2="7.15"></line>
+</g>
+</svg>
+<script>
             function newversion(element, version) {
                 Array.from(document.getElementsByClassName("btn")).forEach(element => element.style.color="#000000");
                 element.style.color="#bdd0d0"
                 Main(version);
             }
         </script>
-
-        <div class="grid-buttons-container">
-            <a class="btn" style="grid-area: btn1;" onclick="newversion(this, 1)">FS 1<br/>
-                <div style="font-size: 16px;">1982</div>
-            </a>
-            <a class="btn" style="grid-area: btn2;" onclick="newversion(this, 2)">FS 2<br/>
-                <div style="font-size: 16px;">1984</div>
-            </a>
-            <a class="btn" style="grid-area: btn3;" onclick="newversion(this, 3)">FS 3<br/>
-                <div style="font-size: 16px;">1988</div>
-            </a>
-            <a class="btn" style="grid-area: btn4; color:#bdd0d0;" onclick="newversion(this, 4)">FS 4<br/>
-                <div style="font-size: 16px;">1989</div>
-            </a>
-        </div>
-
-        <!--
+<div class="grid-buttons-container">
+<a class="btn" onclick="newversion(this, 1)" style="grid-area: btn1;">FS 1<br/>
+<div style="font-size: 16px;">1982</div>
+</a>
+<a class="btn" onclick="newversion(this, 2)" style="grid-area: btn2;">FS 2<br/>
+<div style="font-size: 16px;">1984</div>
+</a>
+<a class="btn" onclick="newversion(this, 3)" style="grid-area: btn3;">FS 3<br/>
+<div style="font-size: 16px;">1988</div>
+</a>
+<a class="btn" onclick="newversion(this, 4)" style="grid-area: btn4; color:#bdd0d0;">FS 4<br/>
+<div style="font-size: 16px;">1989</div>
+</a>
+</div>
+<!--
             <svg id="svg" viewBox="0 0 10 10">
             <g id="thrustrect">
                 <rect x=0 y=0 width="10" height="10" stroke="black" stroke-width="0.2" fill="rgba(255,255,255,0.2)"></rect>
@@ -325,10 +282,8 @@
             </g>
         </svg>
         -->
-
-    </div>
 </div>
-
+</div>
 <!--//style="display:none;"-->
 <!--
 <div class="exactCenter" onclick="this.style.display='none'">

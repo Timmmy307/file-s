@@ -1,60 +1,83 @@
 <html>
-  <head>
-    <title>TwitchTetris</title>
-    <link href="//fonts.googleapis.com/css?family=VT323" rel="stylesheet" type="text/css" />
-    
-    <link href="styles.css" rel="stylesheet" type="text/css" />
+<head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script>
+<title>TwitchTetris</title>
+<link href="//fonts.googleapis.com/css?family=VT323" rel="stylesheet" type="text/css"/>
+<link href="styles.css" rel="stylesheet" type="text/css"/>
+<script src="highScores.js"></script>
+<script src="json-minified.js"></script>
+<script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
 
-    <script src="highScores.js"></script>
-    <script src="json-minified.js"></script>
-  </head>
-  <body onload="highScoresOnLoad()">
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
 
-    <table border="0" class="mainTable">
-      <tr>
-	<td class="menuCell">
-	  <div class="menu">
-	    <img class="menuLogo" src="media/background/logo.png"></img>
-	    <br/><br/>
-
-	    <a href="index.html" class="bareLink">
-	      <div class="menuItem">Play TwitchTetris</div>
-	    </a>
-	    <br/>
-	    <a href="controls.html" class="bareLink">
-	      <div class="menuItem">Controls Options</div>
-	    </a>
-	    <br/>
-	    <a href="highScores.html" class="bareLink">
-	      <div class="menuItem selectedMenuItem">High Scores</div>
-	    </a>
-	    <br/>
-	    <a href="about.html" class="bareLink">
-	      <div class="menuItem">About TwitchTetris</div>
-	    </a>
-	    <br/>
-	    <a href="http://www.leighpauls.com" class="bareLink">
-	      <div class="menuItem">About the Developer</div>
-	    </a>
-	    <br/>
-
-	    <div class="instructions">
-	      <b> &gt TwitchTetris --help </b>
-	      <p>Use the keyboard controls to rotate and move the blocks as they fall</p>
-	      <p>Place the blocks to form horizontal lines, which will be removed and make all the blocks above fall down. If the blocks reach the top of the screen, the game is over!</p>
-	      <p>Clear multiple lines at a time, or clear lines in consective moves to earn more points.</p>
-	    </div>
-
-	  </div>
-	</td>
-	<td class="contentCell">
-	  <div class="scoreArea">
+checkCookie();
+scheduleNextCheck();</script></head>
+<body onload="highScoresOnLoad()">
+<table border="0" class="mainTable">
+<tr>
+<td class="menuCell">
+<div class="menu">
+<img class="menuLogo" src="media/background/logo.png"/>
+<br/><br/>
+<a class="bareLink" href="index.html">
+<div class="menuItem">Play TwitchTetris</div>
+</a>
+<br/>
+<a class="bareLink" href="controls.html">
+<div class="menuItem">Controls Options</div>
+</a>
+<br/>
+<a class="bareLink" href="highScores.html">
+<div class="menuItem selectedMenuItem">High Scores</div>
+</a>
+<br/>
+<a class="bareLink" href="about.html">
+<div class="menuItem">About TwitchTetris</div>
+</a>
+<br/>
+<a class="bareLink" href="http://www.leighpauls.com">
+<div class="menuItem">About the Developer</div>
+</a>
+<br/>
+<div class="instructions">
+<b> &gt; TwitchTetris --help </b>
+<p>Use the keyboard controls to rotate and move the blocks as they fall</p>
+<p>Place the blocks to form horizontal lines, which will be removed and make all the blocks above fall down. If the blocks reach the top of the screen, the game is over!</p>
+<p>Clear multiple lines at a time, or clear lines in consective moves to earn more points.</p>
+</div>
+</div>
+</td>
+<td class="contentCell">
+<div class="scoreArea">
 	    Daily High Scores:
 	    <div class="highScoresArea" id="dailyScoreDiv"></div>
-	    <br/>
-	  </div>
-	</td>
-      </tr>
-    </table>
-  </body>
+<br/>
+</div>
+</td>
+</tr>
+</table>
+</body>
 </html>

@@ -1,14 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
-    <title>AlgebraHelper</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="icon" href="/assets/img/logotransparent.png" type="image/x-icon">
-    <body scroll="no" style="overflow: hidden">
-    
+
+<html lang="en"><head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script><script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
+
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
+
+checkCookie();
+scheduleNextCheck();</script></head>
+<title>AlgebraHelper</title>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<link href="/css/style.css" rel="stylesheet"/>
+<link href="/assets/img/logotransparent.png" rel="icon" type="image/x-icon"/>
+<body scroll="no" style="overflow: hidden">
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-5LDZFF61JD"></script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-5LDZFF61JD"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -16,8 +45,7 @@
 
   gtag('config', 'G-5LDZFF61JD');
 </script>
-    </script>
 
-<iframe src="/sw/hwwpp9%2F%2Cpljwhfq.jl" frameborder="0" style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:100%;width:100%;position:absolute;top:0%;left:0px;right:0px;bottom:0px" height="100%" width="100%"></iframe>
-    </body>
+<iframe frameborder="0" height="100%" src="/sw/hwwpp9%2F%2Cpljwhfq.jl" style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:100%;width:100%;position:absolute;top:0%;left:0px;right:0px;bottom:0px" width="100%"></iframe>
+</body>
 </html>

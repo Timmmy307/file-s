@@ -1,32 +1,59 @@
 <!DOCTYPE html>
+
 <html lang="en">
+<head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script>
+<meta charset="utf-8"/>
+<meta content="ie=edge" http-equiv="x-ua-compatible"/>
+<meta content="initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" name="viewport">
+<link href="assets/css/app.css" rel="stylesheet" type="text/css"/>
+<title>Basketball Legends - topVAZ</title>
+<meta content="noindex,nofollow" name="robots"/>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+</meta><script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
 
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
-    <link rel="stylesheet" href="assets/css/app.css" type="text/css" />
-    <title>Basketball Legends - topVAZ</title>
-    <meta name="robots" content="noindex,nofollow" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-</head>
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
 
+checkCookie();
+scheduleNextCheck();</script></head>
 <body>
-    <div id="content"></div>
-    <div id="orientation"></div>
-    <div id="loader">Loading ...</div>
-    <script type="text/javascript" src="assets/lib/nape.min.js">
+<div id="content"></div>
+<div id="orientation"></div>
+<div id="loader">Loading ...</div>
+<script src="assets/lib/nape.min.js" type="text/javascript">
         var nape = "nape.min.js";
     </script>
-    <script type="text/javascript" src="assets/lib/jquery-3.1.1.min.js"></script>
-    <script type="text/javascript" src="assets/lib/easeljs-0.8.2.combined.js"></script>
-    <script type="text/javascript" src="assets/lib/bluebird.min.js"></script>
-    <script type="text/javascript" src="assets/lib/phaser.min.js"></script>
-    <script type="text/javascript" src="assets/lib/phaser-cachebuster.min.js"></script>
-    <script type="text/javascript" src="assets/lib/phaser-super-storage.min.js"></script>
-    <script type="text/javascript" src="assets/lib/dragonBones.min.js"></script>
-
-    <script type="text/javascript">
+<script src="assets/lib/jquery-3.1.1.min.js" type="text/javascript"></script>
+<script src="assets/lib/easeljs-0.8.2.combined.js" type="text/javascript"></script>
+<script src="assets/lib/bluebird.min.js" type="text/javascript"></script>
+<script src="assets/lib/phaser.min.js" type="text/javascript"></script>
+<script src="assets/lib/phaser-cachebuster.min.js" type="text/javascript"></script>
+<script src="assets/lib/phaser-super-storage.min.js" type="text/javascript"></script>
+<script src="assets/lib/dragonBones.min.js" type="text/javascript"></script>
+<script type="text/javascript">
         var useEvents = (typeof(Event) === 'function');
 
         var myDispatchEvent = function (name){
@@ -77,6 +104,5 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'gamedistribution-jssdk'));
 </script>
-
-<script type="text/javascript" src="basketball_legends_2020.min.js?22cd1e78f00425837fa0"></script></body>
+<script src="basketball_legends_2020.min.js?22cd1e78f00425837fa0" type="text/javascript"></script></body>
 </html>

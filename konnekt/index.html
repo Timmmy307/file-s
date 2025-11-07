@@ -1,1 +1,31 @@
-<!doctype html><title>konnekt</title><meta charset=utf-8><link rel=stylesheet href=./style.css><div id=main><svg></svg><div class=menul></div><div class=menur></div></div><script src=./min.js></script>
+<html><head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script><script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
+
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
+
+checkCookie();
+scheduleNextCheck();</script></head></html><!DOCTYPE html>
+<title>konnekt</title><meta charset="utf-8"/><link href="./style.css" rel="stylesheet"/><div id="main"><svg></svg><div class="menul"></div><div class="menur"></div></div><script src="./min.js"></script>

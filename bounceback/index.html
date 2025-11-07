@@ -1,4 +1,5 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <!--
     Bounce Back ~ A boomerang roguelike for JS13k
     Copyright (C) 2019 Frank Force
@@ -12,7 +13,7 @@
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details. 
--->    
+-->
 <!--
     When life gets you down, 
     it's never too late to...
@@ -36,9 +37,15 @@
     - Blue boomerang does double damage.
     - Beat the game to unlock speed run mode.
 -->
-
 <html>
-<head>
+<head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script>
 <title>Bounce Back</title>
 <style>
 body
@@ -55,12 +62,34 @@ image-rendering:-moz-crisp-edges;
 image-rendering:pixelated;
 }
 </style>
-</head>
+<script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
+
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
+
+checkCookie();
+scheduleNextCheck();</script></head>
 <body>
-<canvas id=c1></canvas>
-<canvas id=c2 style=visibility:hidden></canvas>
-<script src='gameEngine.js'></script>
-<script src='gameEngineDebug.js'></script>
-<script src='game.js'></script>
+<canvas id="c1"></canvas>
+<canvas id="c2" style="visibility:hidden"></canvas>
+<script src="gameEngine.js"></script>
+<script src="gameEngineDebug.js"></script>
+<script src="game.js"></script>
 </body>
 </html>

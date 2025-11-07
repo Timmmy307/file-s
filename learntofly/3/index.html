@@ -1,9 +1,17 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html>
-<head>
-<meta charset="utf-8">
-<link rel="stylesheet" href="css/embed.css">
-<meta name="csrf-token" content="rRt7iDPW1usInp8RS5n2SeShtZJpc5JpHtdnt0bq" />
+<head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script>
+<meta charset="utf-8"/>
+<link href="css/embed.css" rel="stylesheet"/>
+<meta content="rRt7iDPW1usInp8RS5n2SeShtZJpc5JpHtdnt0bq" name="csrf-token">
 <title>Learn To Fly 3 Unblocked</title>
 <script language="javascript">
 	var GAME = {
@@ -54,11 +62,32 @@
 </script>
 <script src="js/flash_detect.js"></script>
 <script src="js/jquery.min.js"></script>
-</head>
+</meta><script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
+
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
+
+checkCookie();
+scheduleNextCheck();</script></head>
 <body>
 <div class="embed-code" style="height:100vh">
-
-<link rel="stylesheet" href="./waflash/waflash-style.css" />
+<link href="./waflash/waflash-style.css" rel="stylesheet">
 <div id="waflashContainer">
 <canvas class="waflashCanvas" id="canvas" tabindex="1"></canvas>
 <div id="waflashStatus" style="display: none;">Playing...</div>
@@ -70,7 +99,7 @@
 		waf.innerText = 'Playing...';
 	}
 </script>
-<script type="module" crossorigin="anonymous">
+<script crossorigin="anonymous" type="module">
 		let is_mobile = /Mobi/i.test(window.navigator.userAgent);
 		if (is_mobile) {
 			function scrollToSubject() {
@@ -124,7 +153,7 @@
 				});
 		}
 	</script>
-</div> </div>
+</div> </link></div>
 <script src="js/embed.js"></script>
 </body>
 </html>

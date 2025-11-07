@@ -1,13 +1,43 @@
 <!---Hello, what you are seeing here is Slope 2, if you want me to unblock another game, submit an issue on Github with the name of the game as the title!--->
 <!DOCTYPE html>
+
 <html>
-<head>
+<head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script>
 <title>Slope 2 - UBlocker</title>
-<link rel="stylesheet" href="Components/gameloader.css" />
+<link href="Components/gameloader.css" rel="stylesheet"/>
 <script src="Components/gameloader.js"></script>
-<meta charset="UTF-8">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-</head>
+<meta charset="utf-8"/>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
+
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
+
+checkCookie();
+scheduleNextCheck();</script></head>
 <body>
 <script type="text/javascript">
       var options = {
@@ -24,7 +54,7 @@
       };
       GameInit.load(options);
     </script>
-  <script language="JavaScript" type="text/javascript">
+<script language="JavaScript" type="text/javascript">
     //<![CDATA[
         window.onbeforeunload = function(){
             return 'Are you sure you want to leave?';

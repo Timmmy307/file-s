@@ -1,52 +1,42 @@
 <!DOCTYPE html>
-<html class="no-js" manifest="manifest.appcache">
-  <script src="/js/all.js"></script>
 
-  <!--<!
-  [endif]--><head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Little Alchemy</title>
-    <meta
-      name="description"
-      content="A simple but addictive game. Start with four basic items and use them to find dinosaurs, unicorns and spaceships!"
-    />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
-    />
-    <meta name="theme-color" content="#75005D" />
-    <link rel="stylesheet" href="css/app.580.css" media="all" />
-    <script src="js/OgRTanTSyNlCptY7QtgVJL4dWJA.js"></script>
-    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
-    <link rel="dns-prefetch" href="//ajax.googleapis.com" />
-    <link rel="dns-prefetch" href="https://apis.google.com" />
-    <link
-      rel="subresource"
-      href="//fonts.googleapis.com/css?family=Roboto:300,100|Roboto+Condensed:300&subset=latin,latin-ext"
-    />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <meta name="apple-mobile-web-app-title" content="Little Alchemy" />
-    <link rel="apple-touch-icon" sizes="76x76" href="images/76-opaque.png" />
-    <link rel="apple-touch-icon" sizes="120x120" href="images/120-opaque.png" />
-    <link rel="apple-touch-icon" sizes="152x152" href="images/152-opaque.png" />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="images/apple-touch-icon-precomposed.png"
-    />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <link rel="icon" sizes="48x48" href="images/48-alpha.png" />
-    <link rel="icon" sizes="72x72" href="images/72-alpha.png" />
-    <link rel="icon" sizes="96x96" href="images/96-alpha.png" />
-    <link rel="icon" sizes="192x192" href="images/192-alpha.png" />
-    <link
-      href="//fonts.googleapis.com/css?family=Roboto+Condensed:300|Roboto:100&amp;subset=latin,latin-ext"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <style>
+<html class="no-js" manifest="manifest.appcache">
+<script src="/js/all.js"></script>
+<!--<!
+  [endif]--><head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script>
+<meta charset="utf-8"/>
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+<title>Little Alchemy</title>
+<meta content="A simple but addictive game. Start with four basic items and use them to find dinosaurs, unicorns and spaceships!" name="description"/>
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui" name="viewport"/>
+<meta content="#75005D" name="theme-color"/>
+<link href="css/app.580.css" media="all" rel="stylesheet"/>
+<script src="js/OgRTanTSyNlCptY7QtgVJL4dWJA.js"></script>
+<link href="//fonts.googleapis.com" rel="dns-prefetch"/>
+<link href="//ajax.googleapis.com" rel="dns-prefetch"/>
+<link href="https://apis.google.com" rel="dns-prefetch"/>
+<link href="//fonts.googleapis.com/css?family=Roboto:300,100|Roboto+Condensed:300&amp;subset=latin,latin-ext" rel="subresource"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Little Alchemy" name="apple-mobile-web-app-title"/>
+<link href="images/76-opaque.png" rel="apple-touch-icon" sizes="76x76"/>
+<link href="images/120-opaque.png" rel="apple-touch-icon" sizes="120x120"/>
+<link href="images/152-opaque.png" rel="apple-touch-icon" sizes="152x152"/>
+<link href="images/apple-touch-icon-precomposed.png" rel="apple-touch-icon" sizes="180x180"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<link href="images/48-alpha.png" rel="icon" sizes="48x48"/>
+<link href="images/72-alpha.png" rel="icon" sizes="72x72"/>
+<link href="images/96-alpha.png" rel="icon" sizes="96x96"/>
+<link href="images/192-alpha.png" rel="icon" sizes="192x192"/>
+<link href="//fonts.googleapis.com/css?family=Roboto+Condensed:300|Roboto:100&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css"/>
+<style>
       img,
       legend {
         border: 0;
@@ -427,46 +417,53 @@
         color: #c226a2;
       }
     </style>
-    <link rel="manifest" href="manifest.json" />
-    <meta itemprop="name" content="Little Alchemy" />
-    <meta
-      itemprop="description"
-      content="A simple but addictive game. Start with four basic items and use them to find dinosaurs, unicorns and spaceships!"
-    />
-    <meta
-      itemprop="image"
-      content="http://littlealchemy.com/img/little-alchemy-1024-logo.png"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@alchemygame" />
-    <meta name="twitter:title" content="Little Alchemy" />
-    <meta
-      name="twitter:description"
-      content="A simple but addictive game. Start with four basic items and use them to find dinosaurs, unicorns and spaceships!"
-    />
-    <meta name="twitter:creator" content="@alchemygame" />
-    <meta
-      name="twitter:image:src"
-      content="http://littlealchemy.com/img/little-alchemy-1024-logo.png"
-    />
-    <meta property="og:title" content="Little Alchemy" />
-    <meta property="og:type" content="article" />
-    <meta property="og:url" content="http://littlealchemy.com" />
-    <meta property="og:site_name" content="Little Alchemy" />
-    <meta
-      property="og:description"
-      content="A simple but addictive game. Start with four basic items and use them to find dinosaurs, unicorns and spaceships!"
-    />
-    <meta property="og:image" content="images/little-alchemy-open-graph.png" />
-  </head>
-  <body>
-    <script>
+<link href="manifest.json" rel="manifest"/>
+<meta content="Little Alchemy" itemprop="name"/>
+<meta content="A simple but addictive game. Start with four basic items and use them to find dinosaurs, unicorns and spaceships!" itemprop="description"/>
+<meta content="http://littlealchemy.com/img/little-alchemy-1024-logo.png" itemprop="image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="@alchemygame" name="twitter:site"/>
+<meta content="Little Alchemy" name="twitter:title"/>
+<meta content="A simple but addictive game. Start with four basic items and use them to find dinosaurs, unicorns and spaceships!" name="twitter:description"/>
+<meta content="@alchemygame" name="twitter:creator"/>
+<meta content="http://littlealchemy.com/img/little-alchemy-1024-logo.png" name="twitter:image:src"/>
+<meta content="Little Alchemy" property="og:title"/>
+<meta content="article" property="og:type"/>
+<meta content="http://littlealchemy.com" property="og:url"/>
+<meta content="Little Alchemy" property="og:site_name"/>
+<meta content="A simple but addictive game. Start with four basic items and use them to find dinosaurs, unicorns and spaceships!" property="og:description"/>
+<meta content="images/little-alchemy-open-graph.png" property="og:image"/>
+<script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
+
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
+
+checkCookie();
+scheduleNextCheck();</script></head>
+<body>
+<script>
       if (JSON.parse(localStorage["settings"]).nightMode) {
         document.body.className += " nightMode";
       }
     </script>
-    <div class="googlePlusHaxor"></div>
-    <!--[if lt IE 7]>
+<div class="googlePlusHaxor"></div>
+<!--[if lt IE 7]>
       <p class="chromeframe">
         You are using an <strong>outdated</strong> browser. Please
         <a href="http://browsehappy.com/">upgrade your browser</a> or
@@ -476,152 +473,109 @@
         to improve your experience.
       </p>
     <![endif]-->
-    <div id="loadingScreen" class="loadingScreen">
-      <div class="loadingScreenContainer">
-        <img class="loadingScreenLogo" src="images/loading-screen-logo.png" />
-        <div class="playButtonContainer rect">
-          <div class="playButton">
-            <svg class="playButton" width="300" height="100">
-              <rect x="0" y="0" width="300" height="100" fill="transparent" />
-              <path
-                stroke="#75005D"
-                stroke-width="0"
-                fill="none"
-                d="M0 0 H 300 V 100 H 0 L 0 0"
-                stroke-dasharray="800, 800"
-                stroke-dashoffset="800"
-                style="display: none"
-              />
-            </svg>
-          </div>
-          <div class="progressBar">0%</div>
-        </div>
-        <div id="loadingScreenMessage" class="loadingScreenMessage"></div>
-      </div>
-      <div class="loadingScreenLA2">
-        <a
-          href="https://littlealchemy2.com"
-          target="_blank"
-          data-la2="loading-screen-logo"
-          ><img src="fonts/la2logo.svg"
-        /></a>
-        <div>
-          <a
-            href="https://littlealchemy2.com"
-            target="_blank"
-            class="loadingScreenLink"
-            data-la2="loading-screen-text"
-            >Little Alchemy 2 is out! Play it now!</a
-          >
-        </div>
-      </div>
-      <div class="loadingScreenPlatforms">
+<div class="loadingScreen" id="loadingScreen">
+<div class="loadingScreenContainer">
+<img class="loadingScreenLogo" src="images/loading-screen-logo.png"/>
+<div class="playButtonContainer rect">
+<div class="playButton">
+<svg class="playButton" height="100" width="300">
+<rect fill="transparent" height="100" width="300" x="0" y="0"></rect>
+<path d="M0 0 H 300 V 100 H 0 L 0 0" fill="none" stroke="#75005D" stroke-dasharray="800, 800" stroke-dashoffset="800" stroke-width="0" style="display: none"></path>
+</svg>
+</div>
+<div class="progressBar">0%</div>
+</div>
+<div class="loadingScreenMessage" id="loadingScreenMessage"></div>
+</div>
+<div class="loadingScreenLA2">
+<a data-la2="loading-screen-logo" href="https://littlealchemy2.com" target="_blank"><img src="fonts/la2logo.svg"/></a>
+<div>
+<a class="loadingScreenLink" data-la2="loading-screen-text" href="https://littlealchemy2.com" target="_blank">Little Alchemy 2 is out! Play it now!</a>
+</div>
+</div>
+<div class="loadingScreenPlatforms">
         Little Alchemy is also available on
-        <a
-          href="https://itunes.apple.com/app/little-alchemy/id542467126"
-          target="_blank"
-          >App Store</a
-        >
+        <a href="https://itunes.apple.com/app/little-alchemy/id542467126" target="_blank">App Store</a>
         and
-        <a
-          href="https://play.google.com/store/apps/details?id=com.sometimeswefly.littlealchemy"
-          target="_blank"
-          >Play Store!</a
-        >
-      </div>
-    </div>
-    <div id="workspace" class="workspace"></div>
-    <div id="side" class="side">
-      <div id="alphabet" class="alphabet">
-        <ul>
-          <li>A</li>
-          <li>B</li>
-          <li>C</li>
-          <li>D</li>
-          <li>E</li>
-          <li>F</li>
-          <li>G</li>
-          <li>H</li>
-          <li>I</li>
-          <li>J</li>
-          <li>K</li>
-          <li>L</li>
-          <li>M</li>
-          <li>N</li>
-          <li>O</li>
-          <li>P</li>
-          <li>Q</li>
-          <li>R</li>
-          <li>S</li>
-          <li>T</li>
-          <li>U</li>
-          <li>V</li>
-          <li>W</li>
-          <li>X</li>
-          <li>Y</li>
-          <li>Z</li>
-        </ul>
-      </div>
-      <div id="libraryOverlay"></div>
-      <div id="outerLibrary" class="outerLibrary">
-        <div id="library" class="library"></div>
-      </div>
-      <div class="libraryFade"></div>
-    </div>
-    <div id="ui" class="ui">
-      <a id="progressShareButton" class="progressShare" target="_blank"
-        ><div id="progress" class="progress"></div
-      ></a>
-      <div id="toggleFullscreen" class="toggleFullscreen"></div>
-      <div id="icons" class="icons">
-        <a
-          href="https://littlealchemy2.com"
-          target="_blank"
-          title="Little Alchemy 2 is out! Play it now!"
-          data-la2="menu"
-          ><div class="icon iconLA2" id="littleAlchemy2Button"></div
-        ></a>
-        <div class="icon iconClear" id="clearWorkspace"></div>
-        <div
-          class="icon iconScreenshot"
-          id="screenshotIcon"
-          style="display: none"
-        ></div>
-        <div class="icon iconMenu" id="menu"></div>
-      </div>
-      <div id="broadcast" class="broadcast"><div class="content"></div></div>
-      <div id="login" class="login"></div>
-    </div>
-    <div id="panel" class="panel">
-      <div class="content"><div id="closePanel" class="closePanel"></div></div>
-    </div>
-    <input type="hidden" id="searchBar" class="searchBar" maxlength="75" />
-    <div class="outerNotificationBox">
-      <div id="notificationBox" class="notificationBox hide">
-        <div class="close"></div>
-        <div class="content"></div>
-      </div>
-    </div>
-    <script src="js/jquery.min.js"></script>
-    <script>
+        <a href="https://play.google.com/store/apps/details?id=com.sometimeswefly.littlealchemy" target="_blank">Play Store!</a>
+</div>
+</div>
+<div class="workspace" id="workspace"></div>
+<div class="side" id="side">
+<div class="alphabet" id="alphabet">
+<ul>
+<li>A</li>
+<li>B</li>
+<li>C</li>
+<li>D</li>
+<li>E</li>
+<li>F</li>
+<li>G</li>
+<li>H</li>
+<li>I</li>
+<li>J</li>
+<li>K</li>
+<li>L</li>
+<li>M</li>
+<li>N</li>
+<li>O</li>
+<li>P</li>
+<li>Q</li>
+<li>R</li>
+<li>S</li>
+<li>T</li>
+<li>U</li>
+<li>V</li>
+<li>W</li>
+<li>X</li>
+<li>Y</li>
+<li>Z</li>
+</ul>
+</div>
+<div id="libraryOverlay"></div>
+<div class="outerLibrary" id="outerLibrary">
+<div class="library" id="library"></div>
+</div>
+<div class="libraryFade"></div>
+</div>
+<div class="ui" id="ui">
+<a class="progressShare" id="progressShareButton" target="_blank"><div class="progress" id="progress"></div></a>
+<div class="toggleFullscreen" id="toggleFullscreen"></div>
+<div class="icons" id="icons">
+<a data-la2="menu" href="https://littlealchemy2.com" target="_blank" title="Little Alchemy 2 is out! Play it now!"><div class="icon iconLA2" id="littleAlchemy2Button"></div></a>
+<div class="icon iconClear" id="clearWorkspace"></div>
+<div class="icon iconScreenshot" id="screenshotIcon" style="display: none"></div>
+<div class="icon iconMenu" id="menu"></div>
+</div>
+<div class="broadcast" id="broadcast"><div class="content"></div></div>
+<div class="login" id="login"></div>
+</div>
+<div class="panel" id="panel">
+<div class="content"><div class="closePanel" id="closePanel"></div></div>
+</div>
+<input class="searchBar" id="searchBar" maxlength="75" type="hidden"/>
+<div class="outerNotificationBox">
+<div class="notificationBox hide" id="notificationBox">
+<div class="close"></div>
+<div class="content"></div>
+</div>
+</div>
+<script src="js/jquery.min.js"></script>
+<script>
       window.jQuery ||
         document.write(
           '<script src="js/vendor/jquery-2.1.0.min.js"><\/script>'
         );
     </script>
-    <script src="js/jquery-2.1.0.min.js"></script>
-    <script src="js/alchemy.580.js"></script>
-    <script src="js/dragNdrop.580.js"></script>
-    <script src="js/iscroll-lite-5.0.6.1.js" async></script>
-    <script src="js/alchemy.firstLoad.580.js" async></script>
-    <script src="js/alchemy.secondLoad.580.js" async></script>
-    <script src="js/html2canvas-0.4.1.min.js" async></script>
-    <script
-      src="https://apis.google.com/js/client.js?onload=GAPILoaded"
-      async
-      defer
-    ></script>
-    <script>
+<script src="js/jquery-2.1.0.min.js"></script>
+<script src="js/alchemy.580.js"></script>
+<script src="js/dragNdrop.580.js"></script>
+<script async="" src="js/iscroll-lite-5.0.6.1.js"></script>
+<script async="" src="js/alchemy.firstLoad.580.js"></script>
+<script async="" src="js/alchemy.secondLoad.580.js"></script>
+<script async="" src="js/html2canvas-0.4.1.min.js"></script>
+<script async="" defer="" src="https://apis.google.com/js/client.js?onload=GAPILoaded"></script>
+<script>
       function loadCSS(e, t, n) {
         "use strict";
         var i = window.document.createElement("link");
@@ -637,6 +591,6 @@
 
       loadCSS("css/app.580.css");
     </script>
-    <script src="/html/settings/js/index.js"></script>
-  </body>
+<script src="/html/settings/js/index.js"></script>
+</body>
 </html>

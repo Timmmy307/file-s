@@ -1,11 +1,19 @@
 
 <!DOCTYPE html>
+
 <html>
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>Getaway Shootout NEW</title>
-	<script>
+<head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script>
+<meta charset="utf-8"/>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<title>Getaway Shootout NEW</title>
+<script>
 	window.config = {
 		loader: 'unity-2020',
 		debug: false,
@@ -30,10 +38,32 @@
 	};
 	</script>
 <!-- will be copied to the resulting head //-->
-</head>
+<script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
+
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
+
+checkCookie();
+scheduleNextCheck();</script></head>
 <body>
-	<script src="patch/js/poki-master-loader.js"></script>
-  <script src="js/analytics_ubg_v1_4.js"></script>
+<script src="patch/js/poki-master-loader.js"></script>
+<script src="js/analytics_ubg_v1_4.js"></script>
 <!-- will be copied to the resulting body //-->
 <!-- will also be copied to the resulting body //-->
 </body>

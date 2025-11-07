@@ -1,27 +1,29 @@
 <!DOCTYPE html>
+
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
-    />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-
-    <meta name="theme-color" content="#000000" />
-
-    <link rel="manifest" href="./manifest.json" />
-    <script src="/js/main.js"></script>
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="application-name" content="Fruit Ninja" />
-    <meta name="apple-mobile-web-app-title" content="Fruit Ninja" />
-    <meta name="msapplication-starturl" content="./" />
-    <script type="text/javascript" src="h5Sdk.js"></script>
-    <script src="/js/main.js"></script>
-
-    <title>Fruit Ninja | 3kh0</title>
-    <style>
+<head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<meta content="ie=edge" http-equiv="X-UA-Compatible"/>
+<meta content="#000000" name="theme-color"/>
+<link href="./manifest.json" rel="manifest"/>
+<script src="/js/main.js"></script>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="Fruit Ninja" name="application-name"/>
+<meta content="Fruit Ninja" name="apple-mobile-web-app-title"/>
+<meta content="./" name="msapplication-starturl"/>
+<script src="h5Sdk.js" type="text/javascript"></script>
+<script src="/js/main.js"></script>
+<title>Fruit Ninja | 3kh0</title>
+<style>
       @font-face {
         font-family: gangofchinese;
         src: url('assets/font/gangofchinese.ttf');
@@ -82,28 +84,48 @@
       }
 
     </style>
-    <!-- <link rel="stylesheet" type="text/css" href="css/styles.css"> -->
-
-    <noscript>Please enable javascript to continue using this application.</noscript>
-
-    <script>window.adsbygoogle = window.adsbygoogle || [];
+<!-- <link rel="stylesheet" type="text/css" href="css/styles.css"> -->
+<noscript>Please enable javascript to continue using this application.</noscript>
+<script>window.adsbygoogle = window.adsbygoogle || [];
         const adBreak =  adConfig = function(o) {adsbygoogle.push(o);}
     </script>
-    <!-- installs the serviceWorker -->
-    <!-- <script>
+<!-- installs the serviceWorker -->
+<!-- <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
           navigator.serviceWorker.register('./sw.js')
         })
       }
     </script> -->
-  </head>
-  <body>
-    <div class="fontLoader" style="font-family: gangofchinese;">-</div>
-    <div id="content">
-        <div id="phaser-canvas"></div>
-    </div>        
-    <!-- <div id="phaser-game"></div> -->
-  <script type="text/javascript" src="vendors.fb6f2f7c51aa86f87ee3.bundle.js"></script><script type="text/javascript" src="main.bb79cf245c33f6bf6733.bundle.js"></script><style id="injectStyles">html, body{ background: none !important; }</style>
+<script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
+
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
+
+checkCookie();
+scheduleNextCheck();</script></head>
+<body>
+<div class="fontLoader" style="font-family: gangofchinese;">-</div>
+<div id="content">
+<div id="phaser-canvas"></div>
+</div>
+<!-- <div id="phaser-game"></div> -->
+<script src="vendors.fb6f2f7c51aa86f87ee3.bundle.js" type="text/javascript"></script><script src="main.bb79cf245c33f6bf6733.bundle.js" type="text/javascript"></script><style id="injectStyles">html, body{ background: none !important; }</style>
 </body>
 </html>

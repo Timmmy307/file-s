@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="404.js"></script>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Game Dictionary</title>
+<link href="https://raw.githubusercontent.com/Sirco-team/files/refs/heads/main/ugb/UBG_favcon.png" rel="icon" type="image/png"/>
+<style>
+    :root{
+      --brand:#007bff;
+      --muted:#6c757d;
+      --card-bg:#ffffff;
+      --page-bg:#f4f6f8;
+      --maxw:980px;
+    }
+    html,body{height:100%}
+    body{
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      margin:0;
+      background:var(--page-bg);
+      color:#111;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      display:flex;
+      justify-content:center;
+      padding:28px;
+    }
+    .wrap{width:100%;max-width:var(--maxw)}
+    header.site-header{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      margin-bottom:18px;
+    }
+    header .logo{
+      width:48px;height:48px;border-radius:8px;background:var(--brand);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;
+      box-shadow:0 6px 18px rgba(2,6,23,0.06);
+      font-family:Helvetica,Arial,sans-serif;
+    }
+    header h1{margin:0;font-size:1.25rem}
+    .hero{
+      background:linear-gradient(180deg, #fff, #fbfdff);
+      padding:18px;border-radius:10px;border:1px solid rgba(2,6,23,0.04);
+      box-shadow:0 6px 16px rgba(18,38,63,0.04);
+      margin-bottom:18px;
+      display:flex;align-items:center;justify-content:space-between;
+    }
+    .hero .info{max-width:78%}
+    .muted{color:var(--muted);font-size:14px}
+    #status{margin-bottom:12px}
+    .row{display:flex;gap:12px;align-items:center;margin-bottom:12px}
+    .card{border:1px solid rgba(2,6,23,0.06);padding:14px;border-radius:8px;background:var(--card-bg);max-width:720px;display:flex;justify-content:space-between;align-items:center}
+    .card .meta{display:flex;flex-direction:column}
+    .card .meta .title{font-weight:600}
+    .card .meta .sub{color:var(--muted);font-size:13px;margin-top:6px}
+    .actions{display:flex;gap:8px;align-items:center} /* aligned buttons */
+    .btn{background:var(--brand);color:#fff;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:600}
+    .btn.ghost{background:transparent;color:var(--brand);border:1px solid rgba(0,123,255,0.12)}
+    .btn.small{padding:6px 10px;font-size:13px;border-radius:6px}
+    .center{display:flex;gap:8px;align-items:center}
+
+    /* search input */
+    .search { width:100%; max-width:420px; padding:8px 10px; border-radius:8px; border:1px solid rgba(2,6,23,0.08); background:transparent; font-size:14px; color:inherit }
+    .search:focus { outline:2px solid rgba(0,123,255,0.12); box-shadow:0 4px 12px rgba(2,6,23,0.04); }
+  </style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<style id="theme-overrides">
+    html.dark {
+      --page-bg: #0b1020;
+      --card-bg: #0f1724;
+      --brand: #2b8aff;
+      --muted: #94a3b8;
+      color-scheme: dark;
+    }
+    html.dark body { background: var(--page-bg); color: #e6eef8; }
+    html.dark .card { background: var(--card-bg); border-color: rgba(255,255,255,0.03); }
+    html.dark .muted { color: var(--muted); }
+  </style>
+
+<!-- Immediately enforce access cookie check on page load.
+     This uses the same cookie name from the access portal ("access")
+     and expects the value to be exactly "1". If not present or not "1"
+     the user is redirected to /404.html. -->
+<script>
+  (function () {
+    function getCookie(name) {
+      const m = document.cookie.match('(?:^|; )' + name.replace(/[-\/\\^$*+?.()|[\]{}]/g,'\\$&') + '=([^;]*)');
+      return m ? decodeURIComponent(m[1]) : null;
+    }
+    const accessValue = getCookie('access');
+    if (accessValue !== '1') {
+      // Ensure replace so the user can't navigate back to this page via history
+      window.location.replace('/sorry.html');
+    }
+  })();
+</script>
+
+<script>
+    // theme detection & persistence (cookie + localStorage fallback)
+    (function(){
+      function getCookie(name){
+        const m = document.cookie.match('(?:^|; )' + name.replace(/[-\/\\^$*+?.()|[\]{}]/g,'\\$&') + '=([^;]*)');
+        return m ? decodeURIComponent(m[1]) : null;
+      }
+      function setCookie(name, value, days){
+        const max = days ? ';max-age=' + (60*60*24*days) : '';
+        document.cookie = encodeURIComponent(name) + '=' + encodeURIComponent(value) + ';path=/' + max;
+      }
+
+      var saved = getCookie('theme') || localStorage.getItem('theme');
+      if (!saved) {
+        try {
+          saved = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        } catch (_) { saved = 'light'; }
+      }
+
+      if (saved === 'dark') document.documentElement.classList.add('dark');
+      else document.documentElement.classList.remove('dark');
+
+      window.setTheme = function(theme){
+        try {
+          if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+            setCookie('theme','dark', 365);
+            localStorage.setItem('theme','dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+            setCookie('theme','light', 365);
+            localStorage.setItem('theme','light');
+          }
+        } catch(e){ /* ignore */ }
+      };
+    })();
+  </script>
+<script defer="" src="/welcome/stars.js"></script>
+</head>
+<body><script src="/analytics.js?v=1761789032784"></script>
+<canvas id="canvas" style="position:fixed;inset:0;z-index:0;pointer-events:none;"></canvas>
+<div class="wrap">
+<header class="site-header">
+<div class="logo">GD</div>
+<div>
+<h1>Game Dictionary #1</h1>
+<div class="muted">Discover and cache playable game bundles for offline use</div>
+</div>
+</header>
+<section aria-label="overview" class="hero" role="region">
+<div class="info">
+<div class="muted" id="status">Loading index...</div>
+<div class="muted" id="hint">Game Dictionary is a beta feature and may contain bugs. Some games may not work, and some games may take time to load.</div>
+<div style="margin-top:10px">
+<input aria-label="Search games" class="search" id="search" placeholder="Search games by name or title…"/>
+</div>
+</div>
+<div class="center">
+<button class="btn small" id="refresh">Refresh</button>
+<button class="btn ghost small" id="toggleRecent" title="Toggle Recently Played">Recent: On</button>
+</div>
+</section>
+<div aria-live="polite" id="games"></div>
+</div>
+<script>
+    // Root-relative index.xml and root-relative game navigation.
+    const INDEX_XML_URL = '/index.xml';
+    const CACHE_NAME = 'site-offline-cache-v1';
+    const MANIFEST_KEY = 'game_dictionary_downloads';
+    const STAR_KEY = 'game_dictionary_starred';
+    const RECENT_KEY = 'game_dictionary_recent';
+    const RECENT_ENABLED_KEY = 'game_dictionary_recent_enabled';
+
+    function el(tag, attrs={}, txt='') {
+      const e = document.createElement(tag);
+      for (const k in attrs) e.setAttribute(k, attrs[k]);
+      if (txt) e.textContent = txt;
+      return e;
+    }
+
+    async function fetchIndexXML() {
+      try {
+        const ts = encodeURIComponent(new Date().toISOString());
+        const sep = INDEX_XML_URL.includes('?') ? '&' : '?';
+        const url = INDEX_XML_URL + sep + 't=' + ts;
+        const r = await fetch(url, {cache: 'no-store'});
+        if (!r.ok) throw new Error('Failed to fetch index.xml (' + r.status + ')');
+        const txt = await r.text();
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(txt, 'application/xml');
+        return xml;
+      } catch (e) {
+        console.error('fetchIndexXML error:', e);
+        return null;
+      }
+    }
+
+    function parseGamesFromXML(xml) {
+      const games = [];
+      if (!xml) return games;
+      const nodes = xml.querySelectorAll('game');
+      nodes.forEach(g => {
+        const name = g.getAttribute('name') || (g.querySelector('name') && g.querySelector('name').textContent) || '';
+        const title = g.querySelector('title') ? g.querySelector('title').textContent : name;
+        const files = [];
+        g.querySelectorAll('file').forEach(f => {
+          const fp = f.textContent.trim();
+          if (fp) files.push(fp);
+        });
+        if (files.length === 0 && name) files.push(name + '/index.html');
+        games.push({name, title, files});
+      });
+      return games;
+    }
+
+    function getSavedManifest() {
+      try {
+        return JSON.parse(localStorage.getItem(MANIFEST_KEY) || '{}');
+      } catch (_) { return {}; }
+    }
+    function saveSavedManifest(m) {
+      localStorage.setItem(MANIFEST_KEY, JSON.stringify(m));
+    }
+
+    function normalizeFileUrl(f) {
+      if (!f) return null;
+      if (/^https?:\/\//i.test(f) || /^\/\//.test(f)) return f;
+      return '/' + f.replace(/^\/+/, '');
+    }
+
+    async function isGameCached(game) {
+      const manifest = getSavedManifest();
+      if (!manifest[game.name]) return false;
+      const cache = await caches.open(CACHE_NAME);
+      for (const f of manifest[game.name]) {
+        const url = normalizeFileUrl(f);
+        if (!url) return false;
+        const match = await cache.match(url);
+        if (!match) return false;
+      }
+      return true;
+    }
+
+    async function downloadGame(game, btn) {
+      btn.disabled = true;
+      const originalText = btn.textContent;
+      btn.textContent = 'Downloading...';
+      const cache = await caches.open(CACHE_NAME);
+      const saved = getSavedManifest();
+      saved[game.name] = [];
+      try {
+        for (const f of game.files) {
+          const fetchUrl = normalizeFileUrl(f);
+          if (!fetchUrl) continue;
+          let resp;
+          try {
+            resp = await fetch(fetchUrl);
+          } catch (e) {
+            console.warn('Fetch failed for', fetchUrl, e);
+            continue;
+          }
+          if (!resp || !resp.ok) {
+            console.warn('Skipping', fetchUrl, 'status', resp && resp.status);
+            continue;
+          }
+          try {
+            await cache.put(fetchUrl, resp.clone());
+          } catch (e) {
+            console.warn('cache.put failed for', fetchUrl, e);
+          }
+          saved[game.name].push(f);
+        }
+        saveSavedManifest(saved);
+        btn.textContent = 'Downloaded';
+        render();
+      } catch (e) {
+        console.error(e);
+        alert('Download failed, check console.');
+        btn.textContent = originalText;
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    function getStarred() {
+      try { return JSON.parse(localStorage.getItem(STAR_KEY) || '[]'); } catch { return []; }
+    }
+    function setStarred(arr) {
+      localStorage.setItem(STAR_KEY, JSON.stringify(arr));
+    }
+    function getRecent() {
+      try { return JSON.parse(localStorage.getItem(RECENT_KEY) || '[]'); } catch { return []; }
+    }
+    function setRecent(arr) {
+      localStorage.setItem(RECENT_KEY, JSON.stringify(arr));
+    }
+    function addRecent(gameName) {
+      let arr = getRecent();
+      arr = arr.filter(n => n !== gameName);
+      arr.unshift(gameName);
+      if (arr.length > 8) arr = arr.slice(0, 8);
+      setRecent(arr);
+    }
+
+    function getRecentEnabled() {
+      try { return JSON.parse(localStorage.getItem(RECENT_ENABLED_KEY)); } catch { return true; }
+    }
+    function setRecentEnabled(v) {
+      localStorage.setItem(RECENT_ENABLED_KEY, JSON.stringify(!!v));
+    }
+
+    function removeRecentGame(name) {
+      const arr = getRecent().filter(n => n !== name);
+      setRecent(arr);
+      render();
+    }
+    if (getRecentEnabled() === null) setRecentEnabled(true);
+
+    function createGameCard(game, cached, starredList) {
+      const opts = (arguments.length >= 4 && typeof arguments[3] === 'object') ? arguments[3] : {};
+      const wrapper = el('div', {class:'row'});
+      const card = el('div', {class:'card'});
+      const meta = el('div', {class:'meta'});
+      const title = el('div', {class:'title'}, game.title || game.name);
+      const sub = el('div', {class:'sub'}, game.name);
+      meta.appendChild(title);
+      meta.appendChild(sub);
+
+      const playRow = el('div', {style:'margin:8px 0 0 0;'});
+      const playBtn = el('button', {class:'btn small'}, 'Play');
+      playBtn.onclick = () => {
+        addRecent(game.name);
+        const dest = '/' + encodeURIComponent(game.name);
+        window.location.href = dest;
+      };
+      playRow.appendChild(playBtn);
+
+      const starBtn = el('button', {class:'btn ghost small', style:'margin-left:8px;'}, starredList.includes(game.name) ? '★ Unstar' : '☆ Star');
+      starBtn.onclick = () => {
+        let arr = getStarred();
+        if (arr.includes(game.name)) arr = arr.filter(n => n !== game.name);
+        else arr.push(game.name);
+        setStarred(arr);
+        render();
+      };
+      playRow.appendChild(starBtn);
+
+      const downloadBtn = el('button', {class:'btn small', style:'margin-left:8px;'}, cached ? 'Downloaded' : 'Download');
+      downloadBtn.onclick = async () => {
+        if (cached) return;
+        await downloadGame(game, downloadBtn);
+      };
+      playRow.appendChild(downloadBtn);
+
+      meta.appendChild(playRow);
+
+      const actions = el('div', {class:'actions'});
+      if (cached) {
+        const remove = el('button', {class:'btn ghost small'}, 'Remove');
+        remove.onclick = async () => {
+          if (!confirm('Remove cached files for ' + game.name + '?')) return;
+          const cache = await caches.open(CACHE_NAME);
+          const saved = getSavedManifest();
+          const list = saved[game.name] || [];
+          for (const f of list) {
+            const url = normalizeFileUrl(f);
+            try { await cache.delete(url); } catch(e){}
+            try { await cache.delete('/' + f.replace(/^\/+/, '')); } catch(e){}
+          }
+          delete saved[game.name];
+          saveSavedManifest(saved);
+          render();
+        };
+        actions.appendChild(remove);
+      }
+      if (opts.unrecent) {
+        const forget = el('button', {class:'btn ghost small'}, 'Forget');
+        forget.onclick = () => {
+          if (!confirm('Remove ' + game.name + ' from Recently Played?')) return;
+          removeRecentGame(game.name);
+        };
+        actions.appendChild(forget);
+      }
+
+      card.appendChild(meta);
+      card.appendChild(actions);
+      wrapper.appendChild(card);
+      return wrapper;
+    }
+
+    let searchTerm = '';
+    function matchesSearch(game) {
+      if (!searchTerm) return true;
+      const n = (game.name || '').toLowerCase();
+      const t = (game.title || '').toLowerCase();
+      return n.includes(searchTerm) || t.includes(searchTerm);
+    }
+    function debounce(fn, wait=200){
+      let t;
+      return (...args)=>{ clearTimeout(t); t = setTimeout(()=>fn(...args), wait); };
+    }
+    const searchEl = document.getElementById('search');
+    if (searchEl) {
+      searchEl.addEventListener('input', debounce((e)=>{
+        searchTerm = (e.target.value || '').trim().toLowerCase();
+        render();
+      }, 180));
+    }
+
+    async function render() {
+      const status = document.getElementById('status');
+      status.textContent = 'Loading index...';
+      const gamesDiv = document.getElementById('games');
+      gamesDiv.innerHTML = '';
+
+      const xml = await fetchIndexXML();
+      const savedManifest = getSavedManifest();
+      const starred = getStarred();
+      const recent = getRecent();
+
+      let gamesFromXML = [];
+      if (xml) {
+        gamesFromXML = parseGamesFromXML(xml);
+      }
+
+      const games = [];
+      const gamesByName = {};
+      for (const g of gamesFromXML) {
+        games.push(g);
+        gamesByName[g.name] = g;
+      }
+
+      function makeFallbackGame(name) {
+        const files = (savedManifest[name] && savedManifest[name].length)
+          ? savedManifest[name].slice()
+          : [name + '/index.html'];
+        return { name, title: name, files };
+      }
+
+      const localNames = new Set([ ...starred, ...recent, ...Object.keys(savedManifest) ]);
+      for (const n of localNames) {
+        if (!n) continue;
+        if (!gamesByName[n]) {
+          const g = makeFallbackGame(n);
+          games.push(g);
+          gamesByName[n] = g;
+        }
+      }
+
+      const offline = (!xml) || (typeof navigator !== 'undefined' && navigator.onLine === false);
+
+      if (offline && games.length === 0) {
+        status.textContent = 'Unable to fetch /index.xml and no local games saved.';
+        return;
+      }
+
+      if (offline) {
+        status.textContent = 'Offline: showing local Starred/Recently Played games';
+      } else if (xml && gamesFromXML.length === 0) {
+        status.textContent = 'No games found in /index.xml. Showing local saved games (if any).';
+      } else {
+        status.textContent = '';
+      }
+
+      if (starred.length > 0) {
+        const starWrap = el('div', {style:'margin-bottom:18px;'});
+        const starTitle = el('div', {style:'font-weight:600;font-size:16px;margin-bottom:8px;'}, '★ Starred');
+        starWrap.appendChild(starTitle);
+        for (const name of starred) {
+          const g = gamesByName[name];
+          if (g && matchesSearch(g)) {
+            const cached = await isGameCached(g);
+            starWrap.appendChild(createGameCard(g, cached, starred));
+          }
+        }
+        gamesDiv.appendChild(starWrap);
+      }
+
+      if (getRecentEnabled() && recent.length > 0) {
+        const recentWrap = el('div', {style:'margin-bottom:18px;'});
+        const recentTitle = el('div', {style:'font-weight:600;font-size:16px;margin-bottom:8px;'}, '⏱ Recently Played');
+        recentWrap.appendChild(recentTitle);
+        for (const name of recent) {
+          const g = gamesByName[name];
+          if (g && matchesSearch(g)) {
+            const cached = await isGameCached(g);
+            recentWrap.appendChild(createGameCard(g, cached, starred, {unrecent: true}));
+          }
+        }
+        gamesDiv.appendChild(recentWrap);
+      }
+
+      if (!offline) {
+        const allWrap = el('div', {style:'margin-bottom:18px;'});
+        const allTitle = el('div', {style:'font-weight:600;font-size:16px;margin-bottom:8px;'}, 'All Games');
+        allWrap.appendChild(allTitle);
+        for (const g of games) {
+          if (!matchesSearch(g)) continue;
+          const cached = await isGameCached(g);
+          allWrap.appendChild(createGameCard(g, cached, starred));
+        }
+        gamesDiv.appendChild(allWrap);
+      }
+
+      const toggleBtn = document.getElementById('toggleRecent');
+      if (toggleBtn) toggleBtn.textContent = 'Recent: ' + (getRecentEnabled() ? 'On' : 'Off');
+    }
+
+    document.getElementById('refresh').addEventListener('click', () => render());
+    document.getElementById('toggleRecent').addEventListener('click', () => {
+      setRecentEnabled(!getRecentEnabled());
+      render();
+    });
+    render();
+  </script>
+</body>
+</html>

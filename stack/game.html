@@ -1,10 +1,18 @@
 <!DOCTYPE html>
+
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Stack | 3kh0</title>
-    <link rel="icon" href="stack.png">
-    <script type="text/javascript">
+<head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script>
+<meta charset="utf-8"/>
+<title>Stack | 3kh0</title>
+<link href="stack.png" rel="icon"/>
+<script type="text/javascript">
       function disableselect(e) {
         return false;
       }
@@ -22,7 +30,7 @@
         document.onclick = reEnable;
       }
     </script>
-    <style>
+<style>
       @import url("https://fonts.googleapis.com/css?family=Comfortaa");
       html,
       body {
@@ -164,37 +172,59 @@
         transition-delay: 0.3s;
       }
     </style>
-    <script>
+<script>
       window.console = window.console || function (t) {};
     </script>
-    <script>
+<script>
       if (document.location.search.match(/type=embed/gi)) {
         window.parent.postMessage("resize", "*");
       }
     </script>
-  </head>
-  <body oncontextmenu="return false;" id="ancss">
-    <meta name="viewport" content="width=device-width,user-scalable=no" />
-    <div id="container">
-      <div id="game"></div>
-      <div id="score">0</div>
-      <div id="instructions">
+<script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
+
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
+
+checkCookie();
+scheduleNextCheck();</script></head>
+<body id="ancss" oncontextmenu="return false;">
+<meta content="width=device-width,user-scalable=no" name="viewport"/>
+<div id="container">
+<div id="game"></div>
+<div id="score">0</div>
+<div id="instructions">
         Click (or press the spacebar) to place the block
       </div>
-      <div class="game-over">
-        <h2>Game Over</h2>
-        <p>You did great, you're the best.</p>
-        <p>Click or spacebar to start again</p>
-      </div>
-      <div class="game-ready">
-        <div id="start-button">Start</div>
-        <div></div>
-      </div>
-    </div>
-    <script src="main.js"></script>
-    <script src="three.min.js"></script>
-    <script src="TweenMax.min.js"></script>
-    <script id="rendered-js">
+<div class="game-over">
+<h2>Game Over</h2>
+<p>You did great, you're the best.</p>
+<p>Click or spacebar to start again</p>
+</div>
+<div class="game-ready">
+<div id="start-button">Start</div>
+<div></div>
+</div>
+</div>
+<script src="main.js"></script>
+<script src="three.min.js"></script>
+<script src="TweenMax.min.js"></script>
+<script id="rendered-js">
       "use strict";
       console.clear();
       var Stage = /** @class */ (function () {
@@ -633,6 +663,6 @@
       })();
       var game = new Game();
     </script>
-    <script type="application/javascript" src="/js/main.js"></script>
-  </body>
+<script src="/js/main.js" type="application/javascript"></script>
+</body>
 </html>

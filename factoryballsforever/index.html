@@ -1,7 +1,15 @@
 <!DOCTYPE html>
+
 <html>
-<head>
-<meta charset="UTF-8">
+<head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script>
+<meta charset="utf-8"/>
 <title>Factory Balls forever</title>
 <style>
   #animation_container, #_preload_div_ {
@@ -59,13 +67,35 @@ function handleComplete(evt,comp) {
 function playSound(id, loop) {
 	return createjs.Sound.play(id, {'interrupt':createjs.Sound.INTERRUPT_EARLY, 'loop': loop});}
 </script>
-</head>
+<script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
+
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
+
+checkCookie();
+scheduleNextCheck();</script></head>
 <body onload="init();" style="margin:0px;">
-	<div id="animation_container" style="background-color:rgba(255, 255, 255, 1.00); width:960px; height:720px">
-		<canvas id="canvas" width="960" height="720" style="position: absolute; display: none; background-color:rgba(255, 255, 255, 1.00);"></canvas>
-		<div id="dom_overlay_container" style="pointer-events:none; overflow:hidden; width:960px; height:720px; position: absolute; left: 0px; top: 0px; display: none;">
-		</div>
-	</div>
-    <div id='_preload_div_' style='position:absolute; top:0; left:0; display: inline-block; height:720px; width: 960px; text-align: center;'>	<span style='display: inline-block; height: 100%; vertical-align: middle;'></span>	<img src=images/_preloader.gif?1576758564620 style='vertical-align: middle; max-height: 100%'/></div>
+<div id="animation_container" style="background-color:rgba(255, 255, 255, 1.00); width:960px; height:720px">
+<canvas height="720" id="canvas" style="position: absolute; display: none; background-color:rgba(255, 255, 255, 1.00);" width="960"></canvas>
+<div id="dom_overlay_container" style="pointer-events:none; overflow:hidden; width:960px; height:720px; position: absolute; left: 0px; top: 0px; display: none;">
+</div>
+</div>
+<div id="_preload_div_" style="position:absolute; top:0; left:0; display: inline-block; height:720px; width: 960px; text-align: center;"> <span style="display: inline-block; height: 100%; vertical-align: middle;"></span> <img src="images/_preloader.gif?1576758564620" style="vertical-align: middle; max-height: 100%"/></div>
 </body>
 </html>

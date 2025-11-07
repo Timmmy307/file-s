@@ -1,27 +1,55 @@
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="robots" content="noindex,nofollow" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Tunnel Rush - topVAZ</title>
-    <link rel="stylesheet" href="style/style.css">
-    <script src="UnityLoader.js"></script>
-    <script src="UnityProgress.js"></script>
-    <link rel="icon" href="img/tunnel.jpg">
-    <script>
+<head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script>
+<meta charset="utf-8"/>
+<meta content="noindex,nofollow" name="robots">
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<title>Tunnel Rush - topVAZ</title>
+<link href="style/style.css" rel="stylesheet"/>
+<script src="UnityLoader.js"></script>
+<script src="UnityProgress.js"></script>
+<link href="img/tunnel.jpg" rel="icon"/>
+<script>
       var gameInstance = UnityLoader.instantiate("gameContainer", "build.json", {onProgress: UnityProgress,Module:{onRuntimeInitialized: function() {UnityProgress(gameInstance, "complete")}}});
     </script>
-  </head>
-  <body>
+</meta><script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
 
-    <div class="webgl-content">
-      <div id="gameContainer" style="width: 100%; height: 95%; margin: auto;"></div>
-	  <div class="footer">
-	            <div class="webgl-logo"></div>
-	            <div class="fullscreen" onclick="gameInstance.SetFullscreen(1)"></div>
-	            <div class="title">Tunnel Rush</div>
-	        </div>
-    </div>
-    <!-- <script type="application/javascript" src="/js/main.js"></script> -->
-  </body>
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
+
+checkCookie();
+scheduleNextCheck();</script></head>
+<body>
+<div class="webgl-content">
+<div id="gameContainer" style="width: 100%; height: 95%; margin: auto;"></div>
+<div class="footer">
+<div class="webgl-logo"></div>
+<div class="fullscreen" onclick="gameInstance.SetFullscreen(1)"></div>
+<div class="title">Tunnel Rush</div>
+</div>
+</div>
+<!-- <script type="application/javascript" src="/js/main.js"></script> -->
+</body>
 </html>

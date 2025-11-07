@@ -1,11 +1,39 @@
-<p class="lead">You discovered the Ξ<sub>b</sub><sup>'-</sup> and the Ξ<sub>b</sub><sup>*-</sup> baryons.</p>
+<html><head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script><script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
 
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
+
+checkCookie();
+scheduleNextCheck();</script></head></html><p class="lead">You discovered the Ξ<sub>b</sub><sup>'-</sup> and the Ξ<sub>b</sub><sup>*-</sup> baryons.</p>
 <section data-min-level="1">
-<hr>
+<hr/>
 <h5>Resources</h5>
 <ul>
-  <li><a href="http://arxiv.org/abs/1411.4849">The official LHCb publication on ArΧiv</a></li>
-  <li><a href="http://press.web.cern.ch/press-releases/2014/11/lhcb-experiment-observes-two-new-baryon-particles-never-seen">Official CERN press release</a></li>
-  <li><a href="http://physicsworld.com/cws/article/news/2014/nov/25/lhcb-bags-two-new-baryonic-strange-beauty-particles">Article on physicsworld.com</a></li>
+<li><a href="http://arxiv.org/abs/1411.4849">The official LHCb publication on ArΧiv</a></li>
+<li><a href="http://press.web.cern.ch/press-releases/2014/11/lhcb-experiment-observes-two-new-baryon-particles-never-seen">Official CERN press release</a></li>
+<li><a href="http://physicsworld.com/cws/article/news/2014/nov/25/lhcb-bags-two-new-baryonic-strange-beauty-particles">Article on physicsworld.com</a></li>
 </ul>
 </section>

@@ -1,15 +1,21 @@
 <!DOCTYPE html>
+
 <html>
-<head>
-<meta charset="UTF-8">
+<head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script>
+<meta charset="utf-8"/>
 <title>Soccer Random | Opium</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-
-<meta name="generator" content="Scirra Construct">
-	<meta name="author" content="RHM Interactive">
-	<meta name="description" content="Random Physics Soccer">
-	<link rel="manifest" href="appmanifest.json">
-
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" name="viewport"/>
+<meta content="Scirra Construct" name="generator"/>
+<meta content="RHM Interactive" name="author"/>
+<meta content="Random Physics Soccer" name="description"/>
+<link href="appmanifest.json" rel="manifest"/>
 <style>html, body {
 	padding: 0;
 	margin: 0;
@@ -91,8 +97,6 @@ html, body, canvas {
     clip: rect(1px, 1px, 1px, 1px);
 }</style>
 <script src="/js/all.js"></script>
-
-
 <script>
 window.addEventListener("keydown", function(e) {
     // space and arrow keys
@@ -101,10 +105,7 @@ window.addEventListener("keydown", function(e) {
     }
 }, false);
 </script>
-
-
-
-    <script>
+<script>
         function CallInterstitialAds()
         {
             adBreak({
@@ -125,27 +126,46 @@ window.addEventListener("keydown", function(e) {
             });
         }
     </script>
+<script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
 
-</head>
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
+
+checkCookie();
+scheduleNextCheck();</script></head>
 <body>
-
 <script>
 if (location.protocol.substr(0, 4) === "file")
 {
 	alert("Web exports won't work until you upload them. (When running on the file: protocol, browsers block many features from working for security reasons.)");
 }
 </script>
-	<script src="box2d.wasm.js"></script>
-	<noscript>
-		<div id="notSupportedWrap">
-			<h2 id="notSupportedTitle">This content requires JavaScript</h2>
-			<p class="notSupportedMessage">JavaScript appears to be disabled. Please enable it to view this content.</p>
-		</div>
-	</noscript>
-	<script src="scripts/supportcheck.js"></script>
-	<script src="scripts/offlineclient.js" type="module"></script>
-	<script src="scripts/main.js" type="module"></script>
-	<script src="scripts/register-sw.js" type="module"></script>
-
+<script src="box2d.wasm.js"></script>
+<noscript>
+<div id="notSupportedWrap">
+<h2 id="notSupportedTitle">This content requires JavaScript</h2>
+<p class="notSupportedMessage">JavaScript appears to be disabled. Please enable it to view this content.</p>
+</div>
+</noscript>
+<script src="scripts/supportcheck.js"></script>
+<script src="scripts/offlineclient.js" type="module"></script>
+<script src="scripts/main.js" type="module"></script>
+<script src="scripts/register-sw.js" type="module"></script>
 </body>
 </html>

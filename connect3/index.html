@@ -1,11 +1,19 @@
 <!DOCTYPE html>
+
 <html>
-  <head>
-    <title>Connect 3</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
-    <style>
+<head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script>
+<title>Connect 3</title>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport">
+<link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet"/>
+<style>
 	html, body {
   height: 100%;
   width: 100%;
@@ -108,8 +116,30 @@ body {
   to {padding: 0 20px; margin-top: 40px;}
 }
 	</style>
-  </head>
-  <body>
-    <script type="text/javascript" src="./connect3.js"></script>
-  </body>
+</meta><script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
+
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
+
+checkCookie();
+scheduleNextCheck();</script></head>
+<body>
+<script src="./connect3.js" type="text/javascript"></script>
+</body>
 </html>

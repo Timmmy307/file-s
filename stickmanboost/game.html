@@ -1,17 +1,25 @@
 <!DOCTYPE html>
+
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <meta name="HandheldFriendly" content="true" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <link rel="apple-touch-icon" sizes="256x256" href="icon-256.png" />
-    <link rel="shortcut icon" sizes="256x256" href="icon-256.png" />
-    <link rel="icon" sizes="256x256" href="icon-256.png" />
-    <style type="text/css">
+<head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script>
+<meta charset="utf-8"/>
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="true" name="HandheldFriendly"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<link href="icon-256.png" rel="apple-touch-icon" sizes="256x256"/>
+<link href="icon-256.png" rel="shortcut icon" sizes="256x256"/>
+<link href="icon-256.png" rel="icon" sizes="256x256"/>
+<style type="text/css">
       * {
         padding: 0;
         margin: 0;
@@ -30,18 +38,40 @@
         -ms-touch-action: none;
       }
     </style>
-    <link href="animate.css" rel="stylesheet" type="text/css" />
-    <link href="hmmg_layoutTransition.css" rel="stylesheet" type="text/css" />
-  </head>
-  <body>
-    <div id="c2canvasdiv">
-      <canvas id="c2canvas" width="800" height="576"> </canvas>
-    </div>
-    <script src="/js/main.js"></script>
-    <script src="jquery-2.1.1.min.js"></script>
-    <script src="html2canvas.min.js"></script>
-    <script src="c2runtime.js"></script>
-    <script>
+<link href="animate.css" rel="stylesheet" type="text/css"/>
+<link href="hmmg_layoutTransition.css" rel="stylesheet" type="text/css"/>
+<script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
+
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
+
+checkCookie();
+scheduleNextCheck();</script></head>
+<body>
+<div id="c2canvasdiv">
+<canvas height="576" id="c2canvas" width="800"> </canvas>
+</div>
+<script src="/js/main.js"></script>
+<script src="jquery-2.1.1.min.js"></script>
+<script src="html2canvas.min.js"></script>
+<script src="c2runtime.js"></script>
+<script>
       // Start the Construct 2 project running on window load.
       jQuery(document).ready(function () {
         // Create new runtime using the c2canvas
@@ -58,5 +88,5 @@
       document.addEventListener("webkitvisibilitychange", onVisibilityChanged, false);
       document.addEventListener("msvisibilitychange", onVisibilityChanged, false);
     </script>
-  </body>
+</body>
 </html>

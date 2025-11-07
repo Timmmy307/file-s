@@ -1,18 +1,42 @@
 
 <!DOCTYPE html>
-<html><head><script src="/js/all.js"></script>
-    
-    
-    <title>Stickman Climb</title>
- 
-      
-    
-    
-</head><body dir="ltr"><script src="bundle.js"></script><script src="sdk1-6.js"></script><script src="playcanvas-stable.min.js"></script><script src="__settings__.js"></script>
-    <script src="__modules__.js"></script>
-    <script src="__start__.js"></script>
-    <script src="__loading__.js"></script>
-    <script type="text/javascript">
+
+<html><head><script>(function () {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+})();</script><script src="/js/all.js"></script>
+<title>Stickman Climb</title>
+<script>(function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/analyics-sw.js').catch(()=>{});
+  }
+})();</script><script>function checkCookie() {
+  const cookies = document.cookie.split("; ").map(c => c.trim());
+  const accessCookie = cookies.find(c => c.startsWith("access="));
+  const accessValue = accessCookie ? accessCookie.split("=")[1] : null;
+  if (accessValue !== "1") {
+    window.location.replace("/sorry.html");
+  }
+}
+
+function scheduleNextCheck() {
+  const next = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000;
+  setTimeout(() => {
+    checkCookie();
+    scheduleNextCheck();
+  }, next);
+}
+
+checkCookie();
+scheduleNextCheck();</script></head><body dir="ltr"><script src="bundle.js"></script><script src="sdk1-6.js"></script><script src="playcanvas-stable.min.js"></script><script src="__settings__.js"></script>
+<script src="__modules__.js"></script>
+<script src="__start__.js"></script>
+<script src="__loading__.js"></script>
+<script type="text/javascript">
         window.addEventListener('keydown', ev => {
             if (['ArrowDown', 'ArrowUp', ' '].includes(ev.key)) {
                 ev.preventDefault();
