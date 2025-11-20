@@ -35,6 +35,9 @@
   const LIFETIME_DAYS = 9;
   const REDIRECT_TO = '/';
 
+  // MUST match the generator page SECRET_KEY
+  const SECRET_KEY = "sirco-is-best-also-any-person-looking-at-this-you-cant-you-are-going-against-the-code-of-conduct-123456767-abc";
+
   // Helper to read a cookie value by name (returns decoded value or null)
   function getCookie(name) {
     const m = document.cookie.match('(?:^|; )' + name.replace(/[-\/\\^$*+?.()|[\]{}]/g,'\\$&') + '=([^;]*)');
@@ -55,13 +58,14 @@
   const $ = (sel) => document.querySelector(sel);
   const $msg = $('#msg'), $btn = $('#btn'), $key = $('#key');
 
-  function say(text, ok=false){ $msg.textContent = text || ''; $msg.className = 'msg ' + (ok?'ok':'err'); }
+  function say(text, ok=false){
+    $msg.textContent = text || '';
+    $msg.className = 'msg ' + (ok ? 'ok' : 'err');
+  }
 
   // Build cookie string with Path=/; SameSite=Lax; Secure (when on HTTPS) and Max-Age
   function setAccessCookie(days){
     const maxAge = Math.floor(days * 24 * 60 * 60);
-    // We store a simple "1" token as the cookie value so other pages can expect exact "1".
-    // (Expiration is handled via Max-Age attribute.)
     const value = '1';
     const isHttps = location.protocol === 'https:';
     const attrs = [
@@ -73,14 +77,91 @@
     document.cookie = `${COOKIE_NAME}=${encodeURIComponent(value)}; ${attrs}`;
   }
 
+  // === Helpers to reverse the generator encoding ===
+
+  function hexToString(hex) {
+    if (!hex || hex.length % 2 !== 0) return '';
+    let out = '';
+    for (let i = 0; i < hex.length; i += 2) {
+      const byte = parseInt(hex.slice(i, i + 2), 16);
+      if (Number.isNaN(byte)) return '';
+      out += String.fromCharCode(byte);
+    }
+    return out;
+  }
+
+  async function sha256Hex(msg) {
+    const buf = new TextEncoder().encode(msg);
+    const hash = await crypto.subtle.digest('SHA-256', buf);
+    return Array.from(new Uint8Array(hash))
+      .map(b => b.toString(16).padStart(2, "0"))
+      .join("");
+  }
+
+  // Verify that a code came from the generator and is not expired
+  async function verifyActivationCode(code) {
+    try {
+      if (!code) return { ok: false, reason: 'empty' };
+
+      // Re-pad Base64 (generator stripped '=')
+      const padLen = (4 - (code.length % 4)) % 4;
+      const padded = code + '='.repeat(padLen);
+
+      // Step 1: Base64 decode -> hex2
+      const hex2 = atob(padded);
+
+      // Step 2: hex2 -> hex1 (each 2 hex chars = char)
+      const hex1 = hexToString(hex2);
+
+      // Step 3: hex1 -> payload string
+      const payloadStr = hexToString(hex1);
+      if (!payloadStr) return { ok: false, reason: 'bad_payload' };
+
+      const payload = JSON.parse(payloadStr);
+      const { created, expires, sum } = payload || {};
+
+      if (!created || !expires || !sum) {
+        return { ok: false, reason: 'bad_payload' };
+      }
+
+      const now = Date.now();
+      if (now > Number(expires)) {
+        return { ok: false, reason: 'expired' };
+      }
+
+      const expectedSum = await sha256Hex(`${created}:${expires}:${SECRET_KEY}`);
+      if (expectedSum !== sum) {
+        return { ok: false, reason: 'bad_signature' };
+      }
+
+      return { ok: true };
+    } catch (e) {
+      console.error('verifyActivationCode error:', e);
+      return { ok: false, reason: 'error' };
+    }
+  }
+
   async function activateWith(code){
     code = (code||'').trim();
-    if(!code){ say('Please enter a code.'); return; }
+    if (!code) {
+      say('Please enter a code.');
+      return;
+    }
 
-    // Client-only mode: treat any code as valid and just set the cookie.
-    // If you later want server validation, replace this client-side acceptance
-    // with a fetch to your backend and set the cookie only on success.
+    say('Checking code…');
 
+    const result = await verifyActivationCode(code);
+
+    if (!result.ok) {
+      if (result.reason === 'expired') {
+        say('That activation code has expired.');
+      } else {
+        say('Invalid activation code.');
+      }
+      return;
+    }
+
+    // Valid + not expired
     setAccessCookie(LIFETIME_DAYS);
     say('Access granted! Redirecting…', true);
     setTimeout(()=> location.replace(REDIRECT_TO), 300);
